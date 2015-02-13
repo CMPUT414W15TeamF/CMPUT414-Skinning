@@ -2,11 +2,11 @@
 
 This is the group project of Skinning topic in the course of CMPUT414
 
-** Proposal 
+** Proposal **
   
   Proposal is done on Feb 9th. The Proposal link is:
   
-** Actual implementation
+** Actual implementation **
 
   Our Literature review will be done on Feb 23rd.
   
