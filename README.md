@@ -21,3 +21,5 @@ This is the group project of Skinning topic in the course of CMPUT414
     So it means, if at least 3 parts are deliverable, we can assume it's done 100% for the week.
     
 Have fun and enjoy playing with our 3D animation
+
+This is our working link: https://docs.google.com/a/ualberta.ca/presentation/d/1RWcU7-1arfVQoY6L_gZikpVamQ0CBqxSC-HCAJ031OA/edit#slide=id.p
