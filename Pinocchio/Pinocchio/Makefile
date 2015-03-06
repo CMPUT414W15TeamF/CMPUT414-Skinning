@@ -1,6 +1,6 @@
 # Makefile for Pinocchio
 CC = g++
-CCFLAGS = -c -O3 -Wall -fPIC
+CCFLAGS = -c -O3 -Wall -fPIC -fpermissive
 LIBS = -lm -shared -fPIC
 
 OBJECTS = attachment.o discretization.o indexer.o lsqSolver.o mesh.o \
