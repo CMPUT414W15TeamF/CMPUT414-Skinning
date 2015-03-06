@@ -1,0 +1,118 @@
+g++ -c -O3 -Wall -fPIC attachment.cpp
+g++ -c -O3 -Wall -fPIC discretization.cpp
+g++ -c -O3 -Wall -fPIC indexer.cpp
+g++ -c -O3 -Wall -fPIC lsqSolver.cpp
+g++ -c -O3 -Wall -fPIC mesh.cpp
+g++ -c -O3 -Wall -fPIC graphutils.cpp
+g++ -c -O3 -Wall -fPIC intersector.cpp
+g++ -c -O3 -Wall -fPIC matrix.cpp
+g++ -c -O3 -Wall -fPIC skeleton.cpp
+g++ -c -O3 -Wall -fPIC embedding.cpp
+g++ -c -O3 -Wall -fPIC pinocchioApi.cpp
+g++ -c -O3 -Wall -fPIC refinement.cpp
+g++ attachment.o discretization.o indexer.o lsqSolver.o mesh.o graphutils.o intersector.o matrix.o skeleton.o embedding.o pinocchioApi.o refinement.o -lm -shared -fPIC -lGL -lGLU -lglut -o libpinocchio.so
+g++ -c -O3 -Wall -fPIC attachment.cpp
+In file included from /usr/include/c++/4.8/ext/hash_map:60:0,
+                 from hashutils.h:25,
+                 from vector.h:26,
+                 from mesh.h:24,
+                 from attachment.h:22,
+                 from attachment.cpp:21:
+/usr/include/c++/4.8/backward/backward_warning.h:32:2: warning: #warning This file includes at least one deprecated or antiquated header which may be removed without further notice at a future date. Please use a non-deprecated interface with equivalent functionality instead. For a listing of replacement headers and interfaces, consult the file backward_warning.h. To disable this warning use -Wno-deprecated. [-Wcpp]
+ #warning \
+  ^
+g++ -c -O3 -Wall -fPIC discretization.cpp
+In file included from /usr/include/c++/4.8/ext/hash_map:60:0,
+                 from hashutils.h:25,
+                 from vector.h:26,
+                 from mesh.h:24,
+                 from pinocchioApi.h:22,
+                 from discretization.cpp:19:
+/usr/include/c++/4.8/backward/backward_warning.h:32:2: warning: #warning This file includes at least one deprecated or antiquated header which may be removed without further notice at a future date. Please use a non-deprecated interface with equivalent functionality instead. For a listing of replacement headers and interfaces, consult the file backward_warning.h. To disable this warning use -Wno-deprecated. [-Wcpp]
+ #warning \
+  ^
+g++ -c -O3 -Wall -fPIC indexer.cpp
+In file included from /usr/include/c++/4.8/ext/hash_map:60:0,
+                 from hashutils.h:25,
+                 from indexer.h:22,
+                 from indexer.cpp:19:
+/usr/include/c++/4.8/backward/backward_warning.h:32:2: warning: #warning This file includes at least one deprecated or antiquated header which may be removed without further notice at a future date. Please use a non-deprecated interface with equivalent functionality instead. For a listing of replacement headers and interfaces, consult the file backward_warning.h. To disable this warning use -Wno-deprecated. [-Wcpp]
+ #warning \
+  ^
+g++ -c -O3 -Wall -fPIC lsqSolver.cpp
+In file included from /usr/include/c++/4.8/ext/hash_map:60:0,
+                 from hashutils.h:25,
+                 from lsqSolver.cpp:24:
+/usr/include/c++/4.8/backward/backward_warning.h:32:2: warning: #warning This file includes at least one deprecated or antiquated header which may be removed without further notice at a future date. Please use a non-deprecated interface with equivalent functionality instead. For a listing of replacement headers and interfaces, consult the file backward_warning.h. To disable this warning use -Wno-deprecated. [-Wcpp]
+ #warning \
+  ^
+g++ -c -O3 -Wall -fPIC mesh.cpp
+In file included from /usr/include/c++/4.8/ext/hash_map:60:0,
+                 from hashutils.h:25,
+                 from vector.h:26,
+                 from mesh.h:24,
+                 from mesh.cpp:19:
+/usr/include/c++/4.8/backward/backward_warning.h:32:2: warning: #warning This file includes at least one deprecated or antiquated header which may be removed without further notice at a future date. Please use a non-deprecated interface with equivalent functionality instead. For a listing of replacement headers and interfaces, consult the file backward_warning.h. To disable this warning use -Wno-deprecated. [-Wcpp]
+ #warning \
+  ^
+g++ -c -O3 -Wall -fPIC graphutils.cpp
+In file included from /usr/include/c++/4.8/ext/hash_map:60:0,
+                 from hashutils.h:25,
+                 from vector.h:26,
+                 from graphutils.h:23,
+                 from graphutils.cpp:19:
+/usr/include/c++/4.8/backward/backward_warning.h:32:2: warning: #warning This file includes at least one deprecated or antiquated header which may be removed without further notice at a future date. Please use a non-deprecated interface with equivalent functionality instead. For a listing of replacement headers and interfaces, consult the file backward_warning.h. To disable this warning use -Wno-deprecated. [-Wcpp]
+ #warning \
+  ^
+g++ -c -O3 -Wall -fPIC intersector.cpp
+In file included from /usr/include/c++/4.8/ext/hash_map:60:0,
+                 from hashutils.h:25,
+                 from vector.h:26,
+                 from mesh.h:24,
+                 from intersector.h:22,
+                 from intersector.cpp:19:
+/usr/include/c++/4.8/backward/backward_warning.h:32:2: warning: #warning This file includes at least one deprecated or antiquated header which may be removed without further notice at a future date. Please use a non-deprecated interface with equivalent functionality instead. For a listing of replacement headers and interfaces, consult the file backward_warning.h. To disable this warning use -Wno-deprecated. [-Wcpp]
+ #warning \
+  ^
+g++ -c -O3 -Wall -fPIC matrix.cpp
+g++ -c -O3 -Wall -fPIC skeleton.cpp
+In file included from /usr/include/c++/4.8/ext/hash_map:60:0,
+                 from hashutils.h:25,
+                 from vector.h:26,
+                 from graphutils.h:23,
+                 from skeleton.h:23,
+                 from skeleton.cpp:19:
+/usr/include/c++/4.8/backward/backward_warning.h:32:2: warning: #warning This file includes at least one deprecated or antiquated header which may be removed without further notice at a future date. Please use a non-deprecated interface with equivalent functionality instead. For a listing of replacement headers and interfaces, consult the file backward_warning.h. To disable this warning use -Wno-deprecated. [-Wcpp]
+ #warning \
+  ^
+g++ -c -O3 -Wall -fPIC embedding.cpp
+In file included from /usr/include/c++/4.8/ext/hash_map:60:0,
+                 from hashutils.h:25,
+                 from vector.h:26,
+                 from mesh.h:24,
+                 from pinocchioApi.h:22,
+                 from embedding.cpp:19:
+/usr/include/c++/4.8/backward/backward_warning.h:32:2: warning: #warning This file includes at least one deprecated or antiquated header which may be removed without further notice at a future date. Please use a non-deprecated interface with equivalent functionality instead. For a listing of replacement headers and interfaces, consult the file backward_warning.h. To disable this warning use -Wno-deprecated. [-Wcpp]
+ #warning \
+  ^
+g++ -c -O3 -Wall -fPIC pinocchioApi.cpp
+In file included from /usr/include/c++/4.8/ext/hash_map:60:0,
+                 from hashutils.h:25,
+                 from vector.h:26,
+                 from mesh.h:24,
+                 from pinocchioApi.h:22,
+                 from pinocchioApi.cpp:19:
+/usr/include/c++/4.8/backward/backward_warning.h:32:2: warning: #warning This file includes at least one deprecated or antiquated header which may be removed without further notice at a future date. Please use a non-deprecated interface with equivalent functionality instead. For a listing of replacement headers and interfaces, consult the file backward_warning.h. To disable this warning use -Wno-deprecated. [-Wcpp]
+ #warning \
+  ^
+g++ -c -O3 -Wall -fPIC refinement.cpp
+In file included from /usr/include/c++/4.8/ext/hash_map:60:0,
+                 from hashutils.h:25,
+                 from vector.h:26,
+                 from mesh.h:24,
+                 from pinocchioApi.h:22,
+                 from refinement.cpp:19:
+/usr/include/c++/4.8/backward/backward_warning.h:32:2: warning: #warning This file includes at least one deprecated or antiquated header which may be removed without further notice at a future date. Please use a non-deprecated interface with equivalent functionality instead. For a listing of replacement headers and interfaces, consult the file backward_warning.h. To disable this warning use -Wno-deprecated. [-Wcpp]
+ #warning \
+  ^
+g++ attachment.o discretization.o indexer.o lsqSolver.o mesh.o graphutils.o intersector.o matrix.o skeleton.o embedding.o pinocchioApi.o refinement.o -lm -shared -fPIC -lGL -lGLU -lglut -o libpinocchio.so
