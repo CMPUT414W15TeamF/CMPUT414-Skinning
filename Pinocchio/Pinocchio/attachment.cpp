@@ -27,7 +27,8 @@ class AttachmentPrivate
 public:
     AttachmentPrivate() {}
     virtual ~AttachmentPrivate() {}
-    virtual Mesh deform(const Mesh &mesh, const vector<Transform<> > &transforms) const = 0;
+    virtual Mesh deform(const Mesh &mesh, 
+            const vector<Transform<> > &transforms) const = 0;
     virtual Vector<double, -1> getWeights(int i) const = 0;
     virtual AttachmentPrivate *clone() const = 0;
 };
@@ -46,7 +47,8 @@ class AttachmentPrivate1 : public AttachmentPrivate {
 public:
     AttachmentPrivate1() {}
 
-    AttachmentPrivate1(const Mesh &mesh, const Skeleton &skeleton, const vector<Vector3> &match, const VisibilityTester *tester)
+    AttachmentPrivate1(const Mesh &mesh, const Skeleton &skeleton,
+            const vector<Vector3> &match, const VisibilityTester *tester)
     {
         int i, j;
         int nv = mesh.vertices.size();
@@ -65,7 +67,8 @@ public:
         weights.resize(nv);
         int bones = skeleton.fGraph().verts.size() - 1;
 
-        for(i = 0; i < nv; ++i) // initialize the weights vectors so they are big enough
+        // initialize the weights vectors so they are big enough
+        for(i = 0; i < nv; ++i) 
             weights[i][bones - 1] = 0.;
 
         vector<vector<double> > boneDists(nv);
@@ -86,24 +89,27 @@ public:
                     
             double minDist = 1e37;
             for(j = 1; j <= bones; ++j) {
-                const Vector3 &v1 = match[j], &v2 = match[skeleton.fPrev()[j]];
+                const Vector3 &v1 = match[j], 
+                      &v2 = match[skeleton.fPrev()[j]];
                 boneDists[i][j - 1] = sqrt(distsqToSeg(cPos, v1, v2));
                 minDist = min(boneDists[i][j - 1], minDist);
             }
             for(j = 1; j <= bones; ++j) {
-                //the reason we don't just pick the closest bone is so that if two are
-                //equally close, both are factored in.
+                //the reason we don't just pick the closest bone is so 
+                //that if two are equally close, both are factored in.
                 if(boneDists[i][j - 1] > minDist * 1.0001)
                     continue;
 
-                const Vector3 &v1 = match[j], &v2 = match[skeleton.fPrev()[j]];
+                const Vector3 &v1 = match[j], 
+                      &v2 = match[skeleton.fPrev()[j]];
                 Vector3 p = projToSeg(cPos, v1, v2);
-                boneVis[i][j - 1] = tester->canSee(cPos, p) && vectorInCone(cPos - p, normals);
+                boneVis[i][j - 1] = tester->canSee(cPos, p) 
+                    && vectorInCone(cPos - p, normals);
             }
         }
 
-        //We have -Lw+Hw=HI, same as (H-L)w=HI, with (H-L)=DA (with D=diag(1./area))
-        //so w = A^-1 (HI/D)
+        //We have -Lw+Hw=HI, same as (H-L)w=HI, with (H-L)=DA (with 
+        //D=diag(1./area)) so w = A^-1 (HI/D)
 
         vector<vector<pair<int, double> > > A(nv);
         vector<double> D(nv, 0.), H(nv, 0.);
@@ -113,8 +119,10 @@ public:
             for(j = 0; j < (int)edges[i].size(); ++j) {
                 int nj = (j + 1) % edges[i].size();
         
-                D[i] += ((mesh.vertices[edges[i][j]].pos - mesh.vertices[i].pos) %
-                         (mesh.vertices[edges[i][nj]].pos - mesh.vertices[i].pos)).length();
+                D[i] += ((mesh.vertices[edges[i][j]].pos - 
+                            mesh.vertices[i].pos) %
+                         (mesh.vertices[edges[i][nj]].pos - 
+                          mesh.vertices[i].pos)).length();
             }
             D[i] = 1. / (1e-10 + D[i]);
 
@@ -136,16 +144,22 @@ public:
                 int nj = (j + 1) % edges[i].size();
                 int pj = (j + edges[i].size() - 1) % edges[i].size();
 
-                Vector3 v1 = mesh.vertices[i].pos - mesh.vertices[edges[i][pj]].pos;
-                Vector3 v2 = mesh.vertices[edges[i][j]].pos - mesh.vertices[edges[i][pj]].pos;
-                Vector3 v3 = mesh.vertices[i].pos - mesh.vertices[edges[i][nj]].pos;
-                Vector3 v4 = mesh.vertices[edges[i][j]].pos - mesh.vertices[edges[i][nj]].pos;
+                Vector3 v1 = mesh.vertices[i].pos - 
+                    mesh.vertices[edges[i][pj]].pos;
+                Vector3 v2 = mesh.vertices[edges[i][j]].pos - 
+                    mesh.vertices[edges[i][pj]].pos;
+                Vector3 v3 = mesh.vertices[i].pos - 
+                    mesh.vertices[edges[i][nj]].pos;
+                Vector3 v4 = mesh.vertices[edges[i][j]].pos - 
+                    mesh.vertices[edges[i][nj]].pos;
                 
                 double cot1 = (v1 * v2) / (1e-6 + (v1 % v2).length());
                 double cot2 = (v3 * v4) / (1e-6 + (v3 % v4).length());
                 sum += (cot1 + cot2);
 
-                if(edges[i][j] > i) //check for triangular here because sum should be computed regardless
+                // check for triangular here because sum should be 
+                // computed regardless
+                if(edges[i][j] > i) 
                     continue;
                 A[i].push_back(make_pair(edges[i][j], -cot1 - cot2));
             }
@@ -164,7 +178,8 @@ public:
         for(j = 0; j < bones; ++j) {
             vector<double> rhs(nv, 0.);
             for(i = 0; i < nv; ++i) {
-                if(boneVis[i][j] && boneDists[i][j] <= boneDists[i][closest[i]] * 1.00001)
+                if(boneVis[i][j] && boneDists[i][j] <= 
+                        boneDists[i][closest[i]] * 1.00001)
                     rhs[i] = H[i] / D[i];
             }
 
@@ -192,7 +207,8 @@ public:
         return;
     }
 
-    Mesh deform(const Mesh &mesh, const vector<Transform<> > &transforms) const
+    Mesh deform(const Mesh &mesh, const vector<Transform<> > &transforms) 
+        const
     {
         Mesh out = mesh;
         int i, nv = mesh.vertices.size();
@@ -204,7 +220,8 @@ public:
             Vector3 newPos;
             int j;
             for(j = 0; j < (int)nzweights[i].size(); ++j) {
-                newPos += ((transforms[nzweights[i][j].first] * out.vertices[i].pos) * nzweights[i][j].second);
+                newPos += ((transforms[nzweights[i][j].first] * 
+                            out.vertices[i].pos) * nzweights[i][j].second);
             }
             out.vertices[i].pos = newPos;
         }
@@ -239,14 +256,18 @@ Attachment::Attachment(const Attachment &att)
     a = att.a->clone();
 }
 
-Vector<double, -1> Attachment::getWeights(int i) const { return a->getWeights(i); }
+Vector<double, -1> Attachment::getWeights(int i) const { 
+    return a->getWeights(i); 
+}
 
-Mesh Attachment::deform(const Mesh &mesh, const vector<Transform<> > &transforms) const
+Mesh Attachment::deform(const Mesh &mesh, 
+        const vector<Transform<> > &transforms) const
 {
     return a->deform(mesh, transforms);
 }
 
-Attachment::Attachment(const Mesh &mesh, const Skeleton &skeleton, const vector<Vector3> &match, const VisibilityTester *tester)
+Attachment::Attachment(const Mesh &mesh, const Skeleton &skeleton, 
+        const vector<Vector3> &match, const VisibilityTester *tester)
 {
     a = new AttachmentPrivate1(mesh, skeleton, match, tester);
 }
