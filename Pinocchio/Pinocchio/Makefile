@@ -1,11 +1,11 @@
 # Makefile for Pinocchio
 CC = g++
-CCFLAGS = -c -O3 -Wall -fPIC -fpermissive
+CCFLAGS = -c -O3 -Wall -w -fPIC -fpermissive
 LIBS = -lm -shared -fPIC
 
 OBJECTS = attachment.o discretization.o indexer.o lsqSolver.o mesh.o \
 	graphutils.o intersector.o matrix.o skeleton.o embedding.o \
-	pinocchioApi.o refinement.o
+	pinocchioApi.o refinement.o quatinterface.o
 
 libpinocchio.so: $(OBJECTS)
 	$(CC) $(OBJECTS) $(LIBS) -o libpinocchio.so
@@ -37,7 +37,7 @@ clean:
 
 Pinocchio.o: Pinocchio.h
 attachment.o: attachment.h mesh.h vector.h hashutils.h mathutils.h
-attachment.o:  Pinocchio.h rect.h skeleton.h
+attachment.o:  Pinocchio.h rect.h skeleton.h quatinterface.h
 attachment.o: graphutils.h transform.h vecutils.h lsqSolver.h
 discretization.o: pinocchioApi.h mesh.h vector.h hashutils.h mathutils.h
 discretization.o:  Pinocchio.h rect.h
@@ -75,3 +75,5 @@ refinement.o: pointprojector.h debugging.h attachment.h skeleton.h
 refinement.o: graphutils.h transform.h deriv.h
 skeleton.o: skeleton.h graphutils.h vector.h hashutils.h mathutils.h
 skeleton.o:  Pinocchio.h utils.h debugging.h
+quatinterface.o: quatinterface.h dual_quat_cu.hpp quat_cu.hpp
+quatinterface.o: transfo.hpp transform.h vector.h

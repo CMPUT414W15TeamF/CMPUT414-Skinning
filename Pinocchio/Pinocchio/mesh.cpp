@@ -66,9 +66,11 @@ Mesh::Mesh(const string &file)
     if(verts == 0)
         return;
     
-    for(i = 0; i < (int)edges.size(); ++i) { //make sure all vertex indices are valid
+    for(i = 0; i < (int)edges.size(); ++i) { 
+        //make sure all vertex indices are valid
         if(edges[i].vertex < 0 || edges[i].vertex >= verts) {
-            Debugging::out() << "Error: invalid vertex index " << edges[i].vertex << endl;
+            Debugging::out() << "Error: invalid vertex index " << 
+                edges[i].vertex << endl;
             OUT;
         }
     }

@@ -37,7 +37,8 @@ struct MeshEdge
 {
     MeshEdge() : vertex(-1), prev(-1), twin(-1) {}
     
-    int vertex; //the vertex the edge points to--the start vertex is prev->vertex
+    //the vertex the edge points to--the start vertex is prev->vertex
+    int vertex; 
     int prev; //ccw, next is prev->prev
     int twin;
 };

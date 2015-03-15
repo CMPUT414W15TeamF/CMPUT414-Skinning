@@ -42,26 +42,32 @@ PinocchioOutput autorig(const Skeleton &given, const Mesh &m)
     PtGraph graph = connectSamples(distanceField, spheres);
 
     //discrete embedding
-    vector<vector<int> > possibilities = computePossibilities(graph, spheres, given);
+    vector<vector<int> > possibilities = computePossibilities(graph, 
+            spheres, given);
 
-    //constraints can be set by respecifying possibilities for skeleton joints:
-    //to constrain joint i to sphere j, use: possiblities[i] = vector<int>(1, j);
+    //constraints can be set by respecifying possibilities for 
+    //skeleton joints:
+    //to constrain joint i to sphere j, use: possiblities[i] = 
+    //vector<int>(1, j);
 
-    vector<int> embeddingIndices = discreteEmbed(graph, spheres, given, possibilities);
+    vector<int> embeddingIndices = discreteEmbed(graph, spheres, 
+            given, possibilities);
 
     if(embeddingIndices.size() == 0) { //failure
         delete distanceField;
         return out;
     }
 
-    vector<Vector3> discreteEmbedding = splitPaths(embeddingIndices, graph, given);
+    vector<Vector3> discreteEmbedding = splitPaths(embeddingIndices, 
+            graph, given);
 
     //continuous refinement
     vector<Vector3> medialCenters(medialSurface.size());
     for(i = 0; i < (int)medialSurface.size(); ++i)
         medialCenters[i] = medialSurface[i].center;
 
-    out.embedding = refineEmbedding(distanceField, medialCenters, discreteEmbedding, given);
+    out.embedding = refineEmbedding(distanceField, medialCenters, 
+            discreteEmbedding, given);
 
     //attachment
     VisTester<TreeType> *tester = new VisTester<TreeType>(distanceField);
