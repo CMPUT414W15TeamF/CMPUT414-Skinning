@@ -22,6 +22,7 @@
 #include "mesh.h"
 #include "skeleton.h"
 #include "transform.h"
+#include "quatinterface.h"
 
 class VisibilityTester
 {

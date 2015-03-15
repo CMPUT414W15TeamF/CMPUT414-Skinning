@@ -217,13 +217,24 @@ public:
             return out; //error
 
         for(i = 0; i < nv; ++i) {
-            Vector3 newPos;
             int j;
-            for(j = 0; j < (int)nzweights[i].size(); ++j) {
-                newPos += ((transforms[nzweights[i][j].first] * 
-                            out.vertices[i].pos) * nzweights[i][j].second);
+            int nbones = (int)nzweights[i].size();
+            Tbx::Dual_quat_cu dquat_blend = Tbx::Dual_quat_cu::identity();
+
+            for(j = 0; j < nbones; ++j) {
+
+                Tbx::Dual_quat_cu dquat = getQuatFromMat(transforms[nzweights[i][j].first]);
+                dquat_blend = dquat_blend + dquat * nzweights[i][j].second;          
+        
+
+             //   newPos += ((transforms[nzweights[i][j].first] * 
+             //               out.vertices[i].pos) * nzweights[i][j].second);
             }
-            out.vertices[i].pos = newPos;
+            Tbx::Point3 restPos = Tbx::Point3(out.vertices[i].pos[0],
+                                        out.vertices[i].pos[1],
+                                        out.vertices[i].pos[2]);
+            Tbx::Point3 newPos = dquat_blend.transform(restPos);
+            out.vertices[i].pos = Vector3(newPos.x, newPos.y, newPos.z);
         }
         
         out.computeVertexNormals();
