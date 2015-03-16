@@ -221,14 +221,14 @@ public:
             int j;
             int nbones = (int)nzweights[i].size();
             Tbx::Quat_cu q0;
-            Tbx::Dual_quat_cu dquat; 
 
             // inititialize the first dual quaternion
             if (nbones == 0) {
                 dquat_blend = Tbx::Dual_quat_cu::identity();
                 q0 = dquat_blend.rotation();
             } else {
-                dquat = getQuatFromMat(transforms[nzweights[i][0].first]);
+                Tbx::Dual_quat_cu dquat = 
+                    getQuatFromMat(transforms[nzweights[i][0].first]); 
                 dquat_blend = dquat * nzweights[i][0].second;
                 q0 = dquat.rotation();
             }
@@ -252,11 +252,8 @@ public:
             }
 
             // Transform the vertex
-            Tbx::Point3 restPos = Tbx::Point3(out.vertices[i].pos[0],
-                                        out.vertices[i].pos[1],
-                                        out.vertices[i].pos[2]);
-            Tbx::Point3 newPos = dquat_blend.transform(restPos);
-            out.vertices[i].pos = Vector3(newPos.x, newPos.y, newPos.z);
+            out.vertices[i].pos = transformPoint(out.vertices[i].pos,
+                                                dquat_blend);
         }
         out.computeVertexNormals();
     

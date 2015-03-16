@@ -43,31 +43,13 @@ Dual_quat_cu getQuatFromMat(Transform<> matrix) {
     // Create rotation quaternion from axis and angle
     Quat_cu rotquat = Quat_cu(axisVec3, (float) angle);
     
-    /*  
-    // create rotation matrix from angle and axis
-    rads = angle;
-    Real c = cos(rads);
-    Real s = sin(rads);
-    
-    mat3 = Mat3(
-            c + axis[x] * axis[x] * 
-            (1-c), axis[x] * axis[y] * (1 - c) - axis[z] * s,
-            axis[x] * axis[z] * (1-c) + axis[y] * s,
-            axis[y] * axis[x] * (1-c) + axis[z] * s,
-            c + axis[y] * axis[y] * (1-c),
-            axis[y] * axis[z] * (1-c) - axis[x] * s,
-            axis[z] * axis[x] * (1-c) - axis[y] * s,
-            axis[z] * axis[y] * (1-c) + axis[x] * s,
-            c + axis[z] * axis[z] * (1-c)
-            );
-
-    // convert to Transfo matrix
-    transfo = Transfo(mat3, transVec3);
-    */
-
     // convert matrix to quaternion
     dualQuat = Dual_quat_cu(rotquat, transVec3);
     return dualQuat;
 }
     
-
+Vector3 transformPoint(Vector3 vpos, Dual_quat_cu &dquat_blend) {
+    Point3 restPos = Point3(vpos[0], vpos[1], vpos[2]);
+    Point3 newPos = dquat_blend.transform(restPos);
+    return Vector3(newPos.x, newPos.y, newPos.z);
+}

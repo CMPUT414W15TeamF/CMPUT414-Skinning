@@ -2,28 +2,47 @@
 
 This is the group project of Skinning topic in the course of CMPUT414
 
-* Proposal 
-  
-  Proposal is done on Feb 9th. The Proposal link is:
-  
-* Actual implementation 
+## Pinocchio Citing
 
-  Our Literature review will be done on Feb 23rd.
-  
-  Actual implementation on coding for linear blend skinning algorithm implementation will start after Feb 23rd
+The readme and license information for Pinocchio are available in the 
+Pinocchio directory.
 
-* Timeline discussion
-  
-  Right now we figured out one way to do this:
+Authors of the code: Ilya Baran and Jovan Popovic, from their paper
+"Automatic Rigging and Animation of 3D Characters" SIGGRAPH 2007.
 
-    Each of the team can set up 5 tasks for one week, but 2 of them are optional.
-    
-    So it means, if at least 3 parts are deliverable, we can assume it's done 100% for the week.
-    
-Have fun and enjoy playing with our 3D animation
+## Dual Quaternion Library Citing
 
-This is our working link: https://docs.google.com/a/ualberta.ca/presentation/d/1RWcU7-1arfVQoY6L_gZikpVamQ0CBqxSC-HCAJ031OA/edit#slide=id.p
+The code used for creating, manipulating, and transformting with dual 
+quaternions is available in the following files:
+* dual_quat_cu.hpp
+* mat3.hpp
+* point3.hpp
+* quat_cu.hpp
+* transfo.hpp
+* vec3.hpp 
 
+Author of code: Rodolphe Vaillant-David
+
+## Our Changes / Contributions
+
+We have modified the following files in order to combine pinocchio with
+the dual quaternion skinning library:
+* attachment.cpp
+
+We created the following file to help with the interfacing between the 
+different classes from each library:
+* quatinterface.hpp
+* quatinterface.cpp
+
+## References
+
+We used the following websites and papers to help us and as guides to 
+integrating dual quaternions into pinocchio.
+* http://rodolphe-vaillant.fr/?e=29
+* Kavan, Ladislav, et al. "Skinning with dual quaternions." Proceedings of the
+  2007 symposium on Interactive 3D graphics and games. ACM, 2007.
+* Baran, Ilya, and Jovan Popović. "Automatic rigging and animation of 3d
+  characters." ACM Transactions on Graphics (TOG). Vol. 26. No. 3. ACM, 2007. 
 
 Eigen library and Armadillo library are added for matrix manipulations
 
