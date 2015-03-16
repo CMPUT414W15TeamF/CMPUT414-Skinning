@@ -30,7 +30,7 @@ Dual_quat_cu getQuatFromMat(Transform<> matrix) {
     Transfo transfo;
     int x = 0, y = 1, z = 2;
 
-    // Get rotation, convert to Vec3
+    // Get translation, convert to Vec3
     trans = matrix.getTrans();
     transVec3 = Vec3(trans[0], trans[1], trans[2]);
 
@@ -40,16 +40,7 @@ Dual_quat_cu getQuatFromMat(Transform<> matrix) {
     Vector<double, 3> axis = quat.getAxis();
     Vec3 axisVec3 = Vec3(axis[0], axis[1], axis[2]);
 
-    /*
     // Create rotation quaternion from axis and angle
-    double sin_a = sin(angle / 2);
-    double cos_a = cos(angle / 2);
-    double qx = axis[x] * sin_a;
-    double qy = axis[y] * sin_a;
-    double qz = axis[z] * sin_a;
-    double qw = cos_a;
-    Quat_cu rotquat = Quat_cu(qw, qx, qy, qz);
-    */
     Quat_cu rotquat = Quat_cu(axisVec3, (float) angle);
     
     /*  

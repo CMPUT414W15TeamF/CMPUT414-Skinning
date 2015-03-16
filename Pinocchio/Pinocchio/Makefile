@@ -60,8 +60,8 @@ lsqSolver.o:   mathutils.h
 lsqSolver.o: Pinocchio.h hashutils.h debugging.h
 matrix.o: matrix.h mathutils.h  
 matrix.o:  Pinocchio.h debugging.h
-mesh.o: mesh.h vector.h hashutils.h mathutils.h 
-mesh.o:   Pinocchio.h
+mesh.o: mesh.h vector.h hashutils.h mathutils.h vec3.hpp
+mesh.o:   Pinocchio.h dual_quat_cu.hpp
 mesh.o: rect.h utils.h debugging.h
 pinocchioApi.o: pinocchioApi.h mesh.h vector.h hashutils.h mathutils.h
 pinocchioApi.o:  Pinocchio.h rect.h
