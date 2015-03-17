@@ -210,6 +210,8 @@ public:
     Mesh deform(const Mesh &mesh, const vector<Transform<> > &transforms) 
         const
     {
+        int DQ = 0, LB = 1, MIX = 2;
+        int type = MIX;
         Mesh out = mesh;
         Tbx::Dual_quat_cu dquat_blend = Tbx::Dual_quat_cu::identity();
         int i, nv = mesh.vertices.size();
@@ -221,39 +223,58 @@ public:
             int j;
             int nbones = (int)nzweights[i].size();
             Tbx::Quat_cu q0;
+            Vector3 newPos;
 
-            // inititialize the first dual quaternion
-            if (nbones == 0) {
-                dquat_blend = Tbx::Dual_quat_cu::identity();
-                q0 = dquat_blend.rotation();
-            } else {
-                Tbx::Dual_quat_cu dquat = 
-                    getQuatFromMat(transforms[nzweights[i][0].first]); 
-                dquat_blend = dquat * nzweights[i][0].second;
-                q0 = dquat.rotation();
+            if (type == MIX || type == DQ) {
+                // inititialize the first dual quaternion
+                if (nbones == 0) {
+                    dquat_blend = Tbx::Dual_quat_cu::identity();
+                    q0 = dquat_blend.rotation();
+                } else {
+                    Tbx::Dual_quat_cu dquat = 
+                        getQuatFromMat(transforms[nzweights[i][0].first]); 
+                    dquat_blend = dquat * nzweights[i][0].second;
+                    q0 = dquat.rotation();
+                }
+            } 
+            if (type != DQ) {
+                // init first transform for linear blend
+                newPos += ((transforms[nzweights[i][0].first] * 
+                       out.vertices[i].pos) * nzweights[i][0].second);
             }
 
             for(j = 1; j < nbones; ++j) {
                 float w = nzweights[i][j].second;
-                const Tbx::Dual_quat_cu& dq = 
-                    (nzweights[i][j].second <= 0) ?
-                    Tbx::Dual_quat_cu::identity() :
-                    getQuatFromMat(transforms[nzweights[i][j].first]);
-                
-                // find shortest rotation
-                if (dq.rotation().dot(q0) < 0.f)
-                    w *= -1.f;
+            
+                if (type == MIX || type == DQ) {
+                    const Tbx::Dual_quat_cu& dq = 
+                        (nzweights[i][j].second <= 0) ?
+                        Tbx::Dual_quat_cu::identity() :
+                        getQuatFromMat(transforms[nzweights[i][j].first]);
+                    
+                    // find shortest rotation
+                    if (dq.rotation().dot(q0) < 0.f)
+                        w *= -1.f;
 
-                dquat_blend = dquat_blend + dq * w;          
-        
+                    dquat_blend = dquat_blend + dq * w;          
+                }
                 
-             //   newPos += ((transforms[nzweights[i][j].first] * 
-             //               out.vertices[i].pos) * nzweights[i][j].second);
+                if (type != DQ)
+                    newPos += ((transforms[nzweights[i][j].first] * 
+                        out.vertices[i].pos) * nzweights[i][j].second);
             }
 
             // Transform the vertex
-            out.vertices[i].pos = transformPoint(out.vertices[i].pos,
-                                                dquat_blend);
+            Vector3 dqpos = out.vertices[i].pos;
+            if (type == DQ || type == MIX) {
+                dqpos = transformPoint(out.vertices[i].pos, dquat_blend);
+                out.vertices[i].pos = dqpos;
+            }
+            if (type == LB || type == MIX)
+                out.vertices[i].pos = newPos;
+            if (type == MIX) 
+                out.vertices[i].pos = newPos * .5 + dqpos * .5; 
+
         }
         out.computeVertexNormals();
     
