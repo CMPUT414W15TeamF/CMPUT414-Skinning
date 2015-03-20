@@ -2,18 +2,25 @@
 
 This is the group project of Skinning topic in the course of CMPUT414
 
-## Pinocchio Citing
+## Pinocchio Code 
+
+Pinocchio prototype was written by Ilya Baran and Jovan Popovic. Details for
+the implementation and algorithms used can be found in their paper paper
+"Automatic Rigging and Animation of 3D Characters" SIGGRAPH 2007.
 
 The readme and license information for Pinocchio are available in the 
 Pinocchio directory.
 
-Authors of the code: Ilya Baran and Jovan Popovic, from their paper
-"Automatic Rigging and Animation of 3D Characters" SIGGRAPH 2007.
+The files from Pinocchio are:
 
-## Dual Quaternion Library Citing
 
-The code used for creating, manipulating, and transformting with dual 
-quaternions is available in the following files:
+
+## Dual Quaternion Skinning Library
+
+The Dual Quaternion Skinning Library was created by Rodolphe Vaillant-David.
+
+The code provides the functionality necessary for creating, manipulating, and
+transformting with dual quaternions. The files encompassing this library are:
 * dual_quat_cu.hpp
 * mat3.hpp
 * point3.hpp
@@ -21,12 +28,35 @@ quaternions is available in the following files:
 * transfo.hpp
 * vec3.hpp 
 
-Author of code: Rodolphe Vaillant-David
 
 ## Our Changes / Contributions
 
-We have modified the following files in order to combine pinocchio with
-the dual quaternion skinning library:
+The main goal of our project was to use the existing prototype Pinocchio and 
+to change the skinning implementation of LBS it uses to improve the results.
+At first we tried changing the original LBS algorithm a bit, but the results
+were quite terrible. 
+
+Our next step was to implement an altogether different algorithm for skinning.
+We decided on dual quaternion skinning (DQS) because it was the easiest in terms of
+changing a program that currently uses LBS to use dual quaternions. We found
+a dual quaternion skinning library by Vaillant-David (mentioned above) which
+already had the functions implemented to accomplish the creation and 
+manipulation of dual quaternions (eg. multiplying them together), and also
+a function to transform a point by a transformation defined by a dual 
+quaternion. Our main challenge was just integrating the two approaches since
+they both used their own different data structures.
+
+We were able to succesfully integrate this two different codes so that 
+Pinocchio was skinning by using dual quaternions instead of transformation
+matrices (LBS). 
+
+We then also decided to see if by blending the results of LBS and DQS the
+visual results could be improved (since DQS is said to have the problem of
+the "bulging" artifcat). We did a few more modifications in order to choose
+if we wanted to run the pinocchio using LBS, DQS, or a mix of both.
+
+All in all, below is a list of all the files we modified in order for our 
+project:
 * attachment.cpp
 
 We created the following file to help with the interfacing between the 
