@@ -1,6 +1,9 @@
 # CMPUT414-Skinning
 
-This is the group project of Skinning topic in the course of CMPUT414
+This is group F's project on Skinning for the course of CMPUT414 Winter 2015.
+
+## Table of Content
+
 
 ## Pinocchio Code 
 
@@ -10,10 +13,6 @@ the implementation and algorithms used can be found in their paper paper
 
 The readme and license information for Pinocchio are available in the 
 Pinocchio directory.
-
-The files from Pinocchio are:
-
-
 
 ## Dual Quaternion Skinning Library
 
@@ -57,7 +56,15 @@ if we wanted to run the pinocchio using LBS, DQS, or a mix of both.
 
 All in all, below is a list of all the files we modified in order for our 
 project:
-* attachment.cpp
+* Pinocchio/attachment.cpp
+* Pinocchio/attachment.h
+* Pinocchio/mesh.h
+* Pinocchio/mesh.cpp
+* Pinocchio/Makefile
+* DemoUI/processor.cpp
+* DemoUI/processor.h
+* DemoUI/Makefile
+* Makefile
 
 We created the following file to help with the interfacing between the 
 different classes from each library:
