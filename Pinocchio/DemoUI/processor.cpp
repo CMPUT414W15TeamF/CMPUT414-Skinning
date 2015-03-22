@@ -49,6 +49,8 @@ struct ArgData
     bool noFit;
     Skeleton skeleton;
     string skeletonname;
+    int skinAlgorithm;
+    float blendWeight;
 };
 
 void printUsageAndExit()
@@ -57,6 +59,7 @@ void printUsageAndExit()
     cout << "              [-skel skelname] [-rot x y z deg]* [-scale s]" << endl;
     cout << "              [-meshonly | -mo] [-circlesonly | -co]" << endl;
     cout << "              [-motion motionname] [-nofit]" << endl;
+    cout << "              [-algo skinning_algorithm [blend_weight]]" << endl;
 
     exit(0);
 }
@@ -70,7 +73,10 @@ ArgData processArgs(const vector<string> &args)
         printUsageAndExit();
 
     out.filename = args[1];
-    
+    // set default skinning algorithm and blending weight
+    out.skinAlgorithm = Mesh::LBS;
+    out.blendWeight = 0.5;
+
     while(cur < num) {
         string curStr = args[cur++];
         if(curStr == string("-skel")) {
@@ -90,9 +96,7 @@ ArgData processArgs(const vector<string> &args)
             else
                 out.skeleton = FileSkeleton(curStr);
             out.skeletonname = curStr;
-            continue;
-        }
-        if(curStr == string("-rot")) {
+        } else if(curStr == string("-rot")) {
             if(cur + 3 >= num) {
                 cout << "Too few rotation arguments; exiting." << endl;
                 printUsageAndExit();
@@ -104,38 +108,53 @@ ArgData processArgs(const vector<string> &args)
             sscanf(args[cur++].c_str(), "%lf", &deg);
             
             out.meshTransform = Quaternion<>(Vector3(x, y, z), deg * M_PI / 180.) * out.meshTransform;
-            continue;
-        }
-        if(curStr == string("-scale")) {
+        } else if(curStr == string("-scale")) {
             if(cur >= num) {
                 cout << "No scale provided; exiting." << endl;
                 printUsageAndExit();
             }
             sscanf(args[cur++].c_str(), "%lf", &out.skelScale);
-            continue;
-        }
-        if(curStr == string("-meshonly") || curStr == string("-mo")) {
+        } else if(curStr == string("-meshonly") || curStr == string("-mo")) {
             out.stopAtMesh = true;
-            continue;
-        }
-        if(curStr == string("-circlesonly") || curStr == string("-co")) {
+        } else if(curStr == string("-circlesonly") || curStr == string("-co")) {
             out.stopAfterCircles = true;
-            continue;
-        }
-        if(curStr == string("-nofit")) {
+        } else if (curStr == string("-nofit")) {
             out.noFit = true;
-            continue;
-        }
-        if(curStr == string("-motion")) {
+        } else if(curStr == string("-motion")) {
             if(cur == num) {
                 cout << "No motion filename specified; ignoring." << endl;
                 continue;
             }
             out.motionname = args[cur++];
-            continue;
+        } else if (curStr == string("-algo")) {
+            /*  Option to use a different skinning algorithm than the
+             *  default LBS. Currently, options are LBS, DQS, and MIX */
+            string algo = args[cur];
+            if (algo == string("LBS")) {
+                out.skinAlgorithm = Mesh::LBS;
+                out.blendWeight = 1.0;
+            } else if (algo == string("DQS")) {
+                out.skinAlgorithm = Mesh::DQS;
+                out.blendWeight = 0.0;
+            } else if (algo == string("MIX")) {
+                /*  Grab the desired blending weight for LBS, i.e
+                 *  how much of the result of LBS you want to see */
+                if(cur + 1 >= num) {
+                    cout << "No blending weight given; exiting." << endl;
+                    cout << args[cur] << endl;
+                    printUsageAndExit();
+                }
+                out.skinAlgorithm = Mesh::MIX;
+                cur++;
+                sscanf(args[cur++].c_str(), "%f", &out.blendWeight);
+            } else {
+                cout << "Unrecognized skinning algorithm" << endl;
+                printUsageAndExit();
+            }
+        } else {
+            cout << "Unrecognized option: " << curStr << endl;
+            printUsageAndExit();
         }
-        cout << "Unrecognized option: " << curStr << endl;
-        printUsageAndExit();
     }
 
     return out;
@@ -148,7 +167,7 @@ void process(const vector<string> &args, MyWindow *w)
 
     Debugging::setOutStream(cout);
 
-    Mesh m(a.filename);
+    Mesh m(a.filename, a.skinAlgorithm, a.blendWeight);
     if(m.vertices.size() == 0) {
         cout << "Error reading file.  Aborting." << endl;
         exit(0);

@@ -26,8 +26,13 @@
 #include <set>
 #include <algorithm>
 
-Mesh::Mesh(const string &file)
-    : scale(1.)
+
+int Mesh::LBS = 0;
+int Mesh::DQS = 1;
+int Mesh::MIX = 2;
+
+Mesh::Mesh(const string &file, int algo, float weight)
+    : scale(1.), blendWeight(weight), algo(algo) 
 {
     int i;
 #define OUT { vertices.clear(); edges.clear(); return; }

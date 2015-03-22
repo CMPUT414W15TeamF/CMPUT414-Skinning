@@ -210,8 +210,23 @@ public:
     Mesh deform(const Mesh &mesh, const vector<Transform<> > &transforms) 
         const
     {
-        int DQ = 0, LB = 1, MIX = 2;
-        int type = MIX;
+        Mesh out;
+
+        if (mesh.algo == Mesh::DQS)
+            out = dualQuaternion(mesh, transforms);
+        else if (mesh.algo == Mesh::LBS)
+            out = linearBlend(mesh, transforms);
+        else if (mesh.algo == Mesh::MIX)
+            out = mixedBlend(mesh, transforms);
+
+        out.computeVertexNormals();
+        return out;
+    }
+    
+    Mesh mixedBlend(const Mesh &mesh, 
+            const vector<Transform<> > &transforms) 
+        const
+    {
         Mesh out = mesh;
         Tbx::Dual_quat_cu dquat_blend = Tbx::Dual_quat_cu::identity();
         int i, nv = mesh.vertices.size();
@@ -225,30 +240,106 @@ public:
             Tbx::Quat_cu q0;
             Vector3 newPos;
 
-            if (type == MIX || type == DQ) {
-                // inititialize the first dual quaternion
-                if (nbones == 0) {
-                    dquat_blend = Tbx::Dual_quat_cu::identity();
-                    q0 = dquat_blend.rotation();
-                } else {
-                    Tbx::Dual_quat_cu dquat = 
-                        getQuatFromMat(transforms[nzweights[i][0].first]); 
-                    dquat_blend = dquat * nzweights[i][0].second;
-                    q0 = dquat.rotation();
-                }
-            } 
-            if (type != DQ) {
-                // init first transform for linear blend
-                newPos += ((transforms[nzweights[i][0].first] * 
-                       out.vertices[i].pos) * nzweights[i][0].second);
+            // inititialize the first dual quaternion
+            if (nbones == 0) {
+                dquat_blend = Tbx::Dual_quat_cu::identity();
+                q0 = dquat_blend.rotation();
+            } else {
+                Tbx::Dual_quat_cu dquat = 
+                    getQuatFromMat(transforms[nzweights[i][0].first]); 
+                dquat_blend = dquat * nzweights[i][0].second;
+                q0 = dquat.rotation();
             }
+            // init first transform for linear blend
+            newPos += ((transforms[nzweights[i][0].first] * 
+                   out.vertices[i].pos) * nzweights[i][0].second);
 
             for(j = 1; j < nbones; ++j) {
                 float w = nzweights[i][j].second;
-            
-                if (type == MIX || type == DQ) {
-                    const Tbx::Dual_quat_cu& dq = 
-                        (nzweights[i][j].second <= 0) ?
+                const Tbx::Dual_quat_cu& dq = 
+                    (nzweights[i][j].second <= 0) ?
+                    Tbx::Dual_quat_cu::identity() :
+                    getQuatFromMat(transforms[nzweights[i][j].first]);
+                
+                // find shortest rotation
+                if (dq.rotation().dot(q0) < 0.f)
+                    w *= -1.f;
+
+                dquat_blend = dquat_blend + dq * w;          
+                newPos += ((transforms[nzweights[i][j].first] * 
+                        out.vertices[i].pos) * w);
+            }
+
+            // Transform the vertex
+            Vector3 dqpos = out.vertices[i].pos;
+            dqpos = transformPoint(out.vertices[i].pos, dquat_blend);
+            out.vertices[i].pos = dqpos;
+            out.vertices[i].pos = newPos * 
+                out.blendWeight + dqpos * (1.0 - out.blendWeight); 
+        }
+        return out;
+    }
+
+    
+    Mesh linearBlend(const Mesh &mesh, const vector<Transform<> > &transforms) 
+        const
+    {
+        Mesh out = mesh;
+        int i, nv = mesh.vertices.size();
+
+        if(mesh.vertices.size() != weights.size())
+            return out; //error
+
+        for(i = 0; i < nv; ++i) {
+            int j;
+            int nbones = (int)nzweights[i].size();
+            Vector3 newPos;
+
+            for(j = 0; j < nbones; ++j) {
+                newPos += ((transforms[nzweights[i][j].first] * 
+                        out.vertices[i].pos) * nzweights[i][j].second);
+            }
+
+            // Transform the vertex
+            out.vertices[i].pos = newPos;
+
+        }
+        return out;
+    }
+    
+    Mesh dualQuaternion(const Mesh &mesh, 
+            const vector<Transform<> > &transforms) 
+        const
+    {
+        int DQ = 0, LB = 1, MIX = 2;
+        Mesh out = mesh;
+        Tbx::Dual_quat_cu dquat_blend = Tbx::Dual_quat_cu::identity();
+        int i, nv = mesh.vertices.size();
+
+        if(mesh.vertices.size() != weights.size())
+            return out; //error
+
+        for(i = 0; i < nv; ++i) {
+            int j;
+            int nbones = (int)nzweights[i].size();
+            Tbx::Quat_cu q0;
+            Vector3 newPos;
+
+            // inititialize the first dual quaternion
+            if (nbones == 0) {
+                dquat_blend = Tbx::Dual_quat_cu::identity();
+                q0 = dquat_blend.rotation();
+            } else {
+                Tbx::Dual_quat_cu dquat = 
+                     getQuatFromMat(transforms[nzweights[i][0].first]); 
+                dquat_blend = dquat * nzweights[i][0].second;
+                q0 = dquat.rotation();
+            } 
+
+            for(j = 1; j < nbones; ++j) {
+                float w = nzweights[i][j].second;
+                const Tbx::Dual_quat_cu& dq = 
+                    (nzweights[i][j].second <= 0) ?
                         Tbx::Dual_quat_cu::identity() :
                         getQuatFromMat(transforms[nzweights[i][j].first]);
                     
@@ -257,27 +348,14 @@ public:
                         w *= -1.f;
 
                     dquat_blend = dquat_blend + dq * w;          
-                }
-                
-                if (type != DQ)
-                    newPos += ((transforms[nzweights[i][j].first] * 
-                        out.vertices[i].pos) * nzweights[i][j].second);
             }
 
             // Transform the vertex
             Vector3 dqpos = out.vertices[i].pos;
-            if (type == DQ || type == MIX) {
-                dqpos = transformPoint(out.vertices[i].pos, dquat_blend);
-                out.vertices[i].pos = dqpos;
-            }
-            if (type == LB || type == MIX)
-                out.vertices[i].pos = newPos;
-            if (type == MIX) 
-                out.vertices[i].pos = newPos * .5 + dqpos * .5; 
+            dqpos = transformPoint(out.vertices[i].pos, dquat_blend);
+            out.vertices[i].pos = dqpos;
 
         }
-        out.computeVertexNormals();
-    
         return out;
     }
 

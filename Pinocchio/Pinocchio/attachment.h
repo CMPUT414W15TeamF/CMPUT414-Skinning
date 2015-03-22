@@ -73,6 +73,9 @@ public:
     virtual ~Attachment();
 
     Mesh deform(const Mesh &mesh, const vector<Transform<> > &transforms) const;
+    Mesh mixedBlend(const Mesh &mesh, const vector<Transform<> > &transforms) const;
+    Mesh linearBlend(const Mesh &mesh, const vector<Transform<> > &transforms) const;
+    Mesh dualQuaternion(const Mesh &mesh, const vector<Transform<> > &transforms) const;
     Vector<double, -1> getWeights(int i) const;
 private:
     AttachmentPrivate *a;
