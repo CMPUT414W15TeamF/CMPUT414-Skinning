@@ -3,6 +3,11 @@
 This is group F's project on Skinning for the course of CMPUT414 Winter 2015.
 
 ## Table of Content
+* [Pinocchio Code](## Pinocchio Code)
+* [Dual Quaternion Skinning Library](## Dual Quaternion Skinning Library)
+* [Our Changes / Contributions ](## Our Changes / Contributions)
+* [How to Compile](## How to Compile)
+* [How to Run](## How to Run)
 
 
 ## Pinocchio Code 
@@ -71,6 +76,10 @@ different classes from each library:
 * quatinterface.hpp
 * quatinterface.cpp
 
+## How to Compile
+
+## How to Run
+
 ## References
 
 We used the following websites and papers to help us and as guides to 
@@ -80,9 +89,3 @@ integrating dual quaternions into pinocchio.
   2007 symposium on Interactive 3D graphics and games. ACM, 2007.
 * Baran, Ilya, and Jovan Popović. "Automatic rigging and animation of 3d
   characters." ACM Transactions on Graphics (TOG). Vol. 26. No. 3. ACM, 2007. 
-
-Eigen library and Armadillo library are added for matrix manipulations
-
-Eigen Library: http://eigen.tuxfamily.org/index.php?title=Main_Page
-
-Armrdillo Library: http://arma.sourceforge.net/
