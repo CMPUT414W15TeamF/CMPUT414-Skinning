@@ -3,14 +3,14 @@
 This is group F's project on Skinning for the course of CMPUT414 Winter 2015.
 
 ## Table of Content
-* [Pinocchio Code](##Pinocchio Code)
-* [Dual Quaternion Skinning Library](##dual-quaternion-skinning-library)
-* [Our Changes / Contributions ](##Our Changes / Contributions)
-* [How to Compile](##How to Compile)
-* [How to Run](##How to Run)
+* [Pinocchio Code](#pinocchio-Code)
+* [Dual Quaternion Skinning Library](#dual-quaternion-skinning-library)
+* [Our Changes / Contributions ](#Our-Changes/Contributions)
+* [How to Compile](#How-to-Compile)
+* [How to Run](#How-to-Run)
 
 
-## Pinocchio Code 
+##pinocchio Code 
 
 Pinocchio prototype was written by Ilya Baran and Jovan Popovic. Details for
 the implementation and algorithms used can be found in their paper paper
