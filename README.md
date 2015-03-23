@@ -112,7 +112,8 @@ Below is an example of running the program on command line, assuming you have no
 We used the following websites and papers to help us and as guides to 
 integrating dual quaternions into pinocchio.
 * http://rodolphe-vaillant.fr/?e=29
+* The meshes used for testing were initially created using Cosmic Blobs(R) software developed by Dassault Systemes SolidWorks Corp.
 * Kavan, Ladislav, et al. "Skinning with dual quaternions." Proceedings of the
   2007 symposium on Interactive 3D graphics and games. ACM, 2007.
 * Baran, Ilya, and Jovan Popović. "Automatic rigging and animation of 3d
-  characters." ACM Transactions on Graphics (TOG). Vol. 26. No. 3. ACM, 2007. 
+  characters." ACM Transactions on Graphics (TOG). Vol. 26. No. 3. ACM, 2007.
