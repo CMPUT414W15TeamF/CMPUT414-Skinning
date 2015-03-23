@@ -19,7 +19,7 @@ the implementation and algorithms used can be found in their paper paper
 The readme and license information for Pinocchio are available in the 
 Pinocchio directory.
 
-##Dual Quaternion Skinning Library
+##Dual-Quaternion-Skinning-Library
 
 The Dual Quaternion Skinning Library was created by Rodolphe Vaillant-David.
 
