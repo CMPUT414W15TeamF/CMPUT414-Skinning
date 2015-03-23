@@ -3,6 +3,7 @@
 This is group F's project on Skinning for the course of CMPUT414 Winter 2015.
 
 ## Table of Content
+* [anchor](#anchor)
 * [Pinocchio Code](##Pinocchio Code)
 * [Dual Quaternion Skinning Library](##Dual Quaternion Skinning Library)
 * [Our Changes / Contributions ](##Our Changes / Contributions)
@@ -19,6 +20,7 @@ the implementation and algorithms used can be found in their paper paper
 The readme and license information for Pinocchio are available in the 
 Pinocchio directory.
 
+(#anchor)
 ## Dual Quaternion Skinning Library
 
 The Dual Quaternion Skinning Library was created by Rodolphe Vaillant-David.
