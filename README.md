@@ -96,7 +96,7 @@ LD_LIBRARY_PATH variable in your .bashrc. By default, it should be in the folder
 Then, to actually run the program, there are a few options. Below is the general command to use:
 `/path/to/DemoUI path/to/obj/file -motion path/to/mocap/file [-algo <LBS|DQS|MIX> <blend_weight>`
 
-*/path/to/DemoUI : the path to the DemoUI executable file (by default should be in `CMPUT414-Skinning/Pinocchio/DemoUI`
+* /path/to/DemoUI : the path to the DemoUI executable file (by default should be in `CMPUT414-Skinning/Pinocchio/DemoUI`)
 * /path/to/obj/file : the path to the object file you wish to rig / skin
 * -motion : specifies you want to use a motion capture file
 * path/to/mocap/file : path to the motion capture file you want to use. Note that you can only use the motion capture files that come with Pinocchio (found under `CMPUT414-Skinning/Pinocchio/DemoUI/data`)
