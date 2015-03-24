@@ -30,7 +30,7 @@ class DisplayMesh
 public:
     virtual ~DisplayMesh() {}
 
-    virtual const Mesh &getMesh() = 0;
+    virtual const Mesh &getMesh(int &framenum) = 0;
     virtual vector<Vector3> getSkel() const { return vector<Vector3>(); }
 };
 
@@ -39,7 +39,7 @@ class StaticDisplayMesh : public DisplayMesh
 public:
     StaticDisplayMesh(const Mesh &inM) : m(inM) {}
 
-    virtual const Mesh &getMesh() { return m; }
+    virtual const Mesh &getMesh(int &framenum) { return m; }
 private:
 
     Mesh m;

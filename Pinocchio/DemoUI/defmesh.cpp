@@ -75,7 +75,7 @@ vector<Transform<> > DefMesh::computeTransforms() const
 
 bool reallyDeform = true;
 
-void DefMesh::updateMesh() const
+void DefMesh::updateMesh(int &framenum) const
 {
     vector<Transform<> > t = computeTransforms();
 
@@ -99,7 +99,7 @@ void DefMesh::updateMesh() const
             const_cast<vector<double> *>(&footOffsets)->push_back(offs);
         }
 
-        vector<Vector3> pose = motion->getPose();
+        vector<Vector3> pose = motion->getPose(framenum);
         vector<Vector3> refPose = motion->getRefPose();
         vector<Vector3> feet;
 

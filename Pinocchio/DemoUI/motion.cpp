@@ -24,6 +24,7 @@ THE SOFTWARE.
 #include "../Pinocchio/skeleton.h"
 #include "../Pinocchio/utils.h"
 
+#include <iostream>
 #include <fstream>
 #include <sstream>
 
@@ -195,7 +196,8 @@ void Motion::readH(istream &strm)
             continue;
         
         if(words.size() != (int)numVals) {
-            cout << "Error reading motion file: not " << numVals << " numbers in line " << lineNum << endl;
+            cout << "Error reading motion file: not " << 
+                numVals << " numbers in line " << lineNum << endl;
             data.clear();
             return;
         }
@@ -277,8 +279,29 @@ int getMsecs()
 
 int Motion::getFrameIdx() const
 {
+    int measureFPS = 0;
+
     if(fixedFrame >= 0)
         return fixedFrame;
+    
+    // Use if wanting to take screenshots
+    if (measureFPS == 0) {
+        static int framenum = -1;
+
+        framenum += 1;
+        if (framenum >= (signed) data.size())
+            framenum = 0;
+        
+        // Pause at specific frames to take snapshot
+        if (framenum == -5) {
+            cout << "Enter 'c' to continue" << endl;
+            std::cin.ignore();
+        }
+        
+        return framenum;
+    }
+    
+    // Use if measuring FPS
     return (getMsecs() / (1000 / 120)) % data.size();
 }
 
@@ -287,8 +310,9 @@ vector<Transform<> > Motion::get() const
     return data[getFrameIdx()];
 }
 
-vector<Vector3> Motion::getPose() const
+vector<Vector3> Motion::getPose(int &framenum) const
 {
-    return poses[getFrameIdx()];
+    framenum = getFrameIdx();
+    return poses[framenum];
 }
 

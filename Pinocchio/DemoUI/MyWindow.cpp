@@ -20,6 +20,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
+#include <iostream>
 #include <FL/gl.h>
 #include <FL/Fl.H>
 #include "MyWindow.h"
@@ -35,11 +36,15 @@ void idle(void *s)
         win->redraw();
 }
 
-MyWindow::MyWindow() : Fl_Gl_Window(1024, 768, "Pinocchio"), flatShading(true), floor(true), skeleton(false)
+MyWindow::MyWindow(int width, int height, const char* title) 
+    : Fl_Gl_Window(width, height, title), 
+    flatShading(true), 
+    floor(true), 
+    skeleton(false),
+    paused(false)
 {
     size_range(20, 20, 5000, 5000);
     end();
-
     resetTransform();
     win = this;
     Fl::add_idle(idle);
@@ -107,6 +112,15 @@ int MyWindow::handle(int event) {
         case 'g':
             floor = !floor;
             break;
+        case 'p':
+            {
+                // Pause until user hits p again.
+                if (paused)
+                    paused = false;
+                else
+                    paused = true;
+            }
+            return 1;
         case '1':
                 angle1();
             break;
@@ -149,6 +163,7 @@ void MyWindow::angle1() {
 
 void MyWindow::draw() {
     int i;
+    if (!paused) {
     if (!valid()) { //Init viewport and projection
         initGL();
 
@@ -204,10 +219,19 @@ void MyWindow::draw() {
     if(floor)
         drawFloor();
 
+    // Get mesh to draw
+    int framenum;
     vector<const Mesh *> ms(meshes.size());
     for(i = 0; i < (int)meshes.size(); ++i) {
-        ms[i] = &(meshes[i]->getMesh());
+        ms[i] = &(meshes[i]->getMesh(framenum));
     }
+
+    // display frame number
+    stringstream strs;
+    strs << framenum;
+    string temp = strs.str();
+    const char* strFramenum = temp.c_str();
+    win->label(strFramenum);    
 
     //shadows
     if(floor) {
@@ -268,6 +292,7 @@ void MyWindow::draw() {
             }
             glEnd();
         }
+    }
     }
 }
 

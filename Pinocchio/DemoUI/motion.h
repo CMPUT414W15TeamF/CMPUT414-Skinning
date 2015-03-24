@@ -32,7 +32,7 @@ public:
 
     bool empty() const { return data.empty(); }
     vector<Transform<> > get() const;
-    vector<Vector3> getPose() const;
+    vector<Vector3> getPose(int &framenum) const;
     vector<Vector3> getRefPose() const { return refPose; }
     double getLegLength() const { return legLength; }
     double getLegWidth() const { return legWidth; }

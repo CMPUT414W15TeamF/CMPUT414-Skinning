@@ -42,19 +42,22 @@ public:
 
     void setMotion(Motion *inMotion) { motion = inMotion; }
     Motion *getMotion() const { return motion; }
-    void updateIfHasMotion() const { if(motion) updateMesh(); }
+    void updateIfHasMotion(int &fnum) const { if(motion) updateMesh(fnum); }
 
     vector<Vector3> getSkel() const;
     const Skeleton &getOrigSkel() const { return origSkel; }
 
     const Attachment &getAttachment() const { return attachment; }
 
-    const Mesh &getMesh() { updateMesh(); return curMesh; }
+    const Mesh &getMesh(int &framenum) {
+        updateMesh(framenum); 
+        return curMesh; 
+    }
 
 private:
     double getLegRatio() const;
     vector<Transform<> > computeTransforms() const;
-    void updateMesh() const;
+    void updateMesh(int &framenum) const;
 
     Skeleton origSkel;
     vector<Vector3> match;

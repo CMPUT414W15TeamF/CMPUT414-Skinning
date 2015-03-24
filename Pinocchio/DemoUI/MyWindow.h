@@ -24,6 +24,9 @@ THE SOFTWARE.
 #define MYWINDOW_H
 
 #include <FL/Fl_Gl_Window.H>
+#include <stdlib.h>
+#include <sstream>
+#include <string.h>
 #include "../Pinocchio/mesh.h"
 #include "../Pinocchio/transform.h"
 #include "DisplayMesh.h"
@@ -42,7 +45,7 @@ struct LineSegment
 class MyWindow : public Fl_Gl_Window
 {
 public:
-    MyWindow();
+    MyWindow(int width, int height, const char* title);
 
     virtual ~MyWindow() {}
     virtual void draw();
@@ -57,6 +60,7 @@ private:
     Transform<> transform;
     vector<DisplayMesh *> meshes;
     vector<LineSegment> lines;
+    bool paused; // boolean to know if we're paused or not
 
     void resetTransform();
     void initGL();

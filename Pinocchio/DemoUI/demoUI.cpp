@@ -26,8 +26,7 @@ THE SOFTWARE.
 #include "processor.h"
 
 int main(int argc, char **argv) {
-    MyWindow *window = new MyWindow();
-
+    MyWindow *window = new MyWindow(1024, 768, "Pinocchio");
     vector<string> args;
     for(int i = 0; i < argc; ++i)
         args.push_back(argv[i]);
