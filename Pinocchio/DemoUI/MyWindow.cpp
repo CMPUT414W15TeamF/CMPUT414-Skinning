@@ -163,7 +163,7 @@ void MyWindow::angle1() {
 
 void MyWindow::draw() {
     int i;
-    if (!paused) {
+    static int framenum;
     if (!valid()) { //Init viewport and projection
         initGL();
 
@@ -219,11 +219,12 @@ void MyWindow::draw() {
     if(floor)
         drawFloor();
 
-    // Get mesh to draw
-    int framenum;
-    vector<const Mesh *> ms(meshes.size());
-    for(i = 0; i < (int)meshes.size(); ++i) {
-        ms[i] = &(meshes[i]->getMesh(framenum));
+    // Get mesh to draw, but only if not paused.
+    static vector<const Mesh *> ms(meshes.size());
+    if (!paused) {
+        for(i = 0; i < (int)meshes.size(); ++i) {
+            ms[i] = &(meshes[i]->getMesh(framenum));
+        }
     }
 
     // display frame number
@@ -292,7 +293,6 @@ void MyWindow::draw() {
             }
             glEnd();
         }
-    }
     }
 }
 
