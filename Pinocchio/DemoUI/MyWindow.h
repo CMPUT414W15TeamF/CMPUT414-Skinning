@@ -62,6 +62,7 @@ private:
     void initGL();
     void drawMesh(const Mesh &m, bool flatShading, Vector3 trans = Vector3());
     void drawFloor();
+    void angle1();
 };
 
 #endif //MYWINDOW_H

@@ -55,6 +55,7 @@ int MyWindow::handle(int event) {
         return 1;
     case FL_DRAG:
         if(Fl::event_state(FL_BUTTON3)) {
+            // rotate cam
             int dx = Fl::event_x() - prevX, dy = Fl::event_y() - prevY;
             double len = sqrt(double(SQR(dx) + SQR(dy))) * 0.01;
             Transform<> cur = Transform<>(Vector3(0.5, 0.5, 0.5)) *
@@ -62,12 +63,16 @@ int MyWindow::handle(int event) {
                 Transform<>(Vector3(-0.5, -0.5, -0.5));
 
             transform = cur * transform;
+            cout << "dx: " << dx << " dy: " << dy << endl;
         }
         else if(Fl::event_state(FL_BUTTON1)) {
+            // translate cam
             double scale = min(w(), h()) / 2.5;
-            Transform<> cur = Transform<>(Vector3(Fl::event_x() - prevX, prevY - Fl::event_y(), 0) / scale);
+            int dx = Fl::event_x() - prevX, dy = prevY - Fl::event_y();
+            Transform<> cur = Transform<>(Vector3(dx, dy, 0) / scale);
 
             transform = cur * transform;
+            cout << "dx: " << dx << " dy: " << dy << endl;
         }
         prevX = Fl::event_x();
         prevY = Fl::event_y();
@@ -102,6 +107,9 @@ int MyWindow::handle(int event) {
         case 'g':
             floor = !floor;
             break;
+        case '1':
+                angle1();
+            break;
         default:
             break;
         }
@@ -111,6 +119,33 @@ int MyWindow::handle(int event) {
         return Fl_Gl_Window::handle(event);
     }
 }
+                
+
+void MyWindow::angle1() {
+    // zoom
+    double scale = exp(-double(-6.0) / 10.);
+
+    Transform<> cur = Transform<>(Vector3(0.5, 0.5, 0.5)) *
+        Transform<>(scale) *
+        Transform<>(Vector3(-0.5, -0.5, -0.5));
+    
+    transform = cur * transform;
+
+    // rotate camera
+    int dx = -90, dy = 12;
+    double len = sqrt(double(SQR(dx) + SQR(dy))) * 0.01;
+    cur = Transform<>(Vector3(0.5, 0.5, 0.5)) *
+        Transform<>(Quaternion<>(Vector3(dy, dx, 0), len)) *
+        Transform<>(Vector3(-0.5, -0.5, -0.5));
+
+    transform = cur * transform;
+    
+    // translate camera
+    scale = min(w(), h()) / 2.5;
+    cur = Transform<>(Vector3(-380, 100, 0) / scale);
+
+    transform = cur * transform;
+} 
 
 void MyWindow::draw() {
     int i;

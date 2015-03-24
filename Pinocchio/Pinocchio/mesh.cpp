@@ -27,9 +27,10 @@
 #include <algorithm>
 
 
-int Mesh::LBS = 0;
-int Mesh::DQS = 1;
-int Mesh::MIX = 2;
+// Some constants to make it easier to specify different algorithms.
+int Mesh::LBS = 0;  // linear blend skinning
+int Mesh::DQS = 1;  // dual quaternion skinning
+int Mesh::MIX = 2;  // mixed LBS and DQS results
 
 Mesh::Mesh(const string &file, int algo, float weight)
     : scale(1.), blendWeight(weight), algo(algo) 

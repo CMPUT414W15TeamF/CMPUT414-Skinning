@@ -207,6 +207,11 @@ public:
         return;
     }
 
+    /*
+     * Deforms the mesh but according to what algorithm the user chose to
+     * use as the skinning algorithm. The options are linear blend 
+     * skinning, dual quaternion skinning, or a mixed result.
+     */
     Mesh deform(const Mesh &mesh, const vector<Transform<> > &transforms) 
         const
     {
@@ -222,7 +227,15 @@ public:
         out.computeVertexNormals();
         return out;
     }
-    
+   
+    /*  
+     *  This function deforms the mesh using a blended result of both
+     *  dual quaternion and linear blend skinning. The blending weight
+     *  that is contained within the mesh object passed in referes to how
+     *  much of the linear blend result will be mixed in. For example,
+     *  if the blending weight is 0.2, then 20% of the linear blend result
+     *  will be used, while 80% of the dual quaternion result will be used.
+     */
     Mesh mixedBlend(const Mesh &mesh, 
             const vector<Transform<> > &transforms) 
         const
@@ -281,6 +294,11 @@ public:
     }
 
     
+    /*
+     * This function deforms the mesh using the normal linear blend
+     * skinning. This was the original code used in Pinocchio before
+     * our adjustments.
+     */
     Mesh linearBlend(const Mesh &mesh, const vector<Transform<> > &transforms) 
         const
     {
@@ -295,6 +313,8 @@ public:
             int nbones = (int)nzweights[i].size();
             Vector3 newPos;
 
+            // Loop through bones and sum up their weighted
+            // transformations
             for(j = 0; j < nbones; ++j) {
                 newPos += ((transforms[nzweights[i][j].first] * 
                         out.vertices[i].pos) * nzweights[i][j].second);
@@ -307,11 +327,15 @@ public:
         return out;
     }
     
+    /*
+     * This function deforms the mesh using dual quaternion skinning.
+     * We used the functions from the skinning library by Rodolphe 
+     * Vaillant-David.
+     */
     Mesh dualQuaternion(const Mesh &mesh, 
             const vector<Transform<> > &transforms) 
         const
     {
-        int DQ = 0, LB = 1, MIX = 2;
         Mesh out = mesh;
         Tbx::Dual_quat_cu dquat_blend = Tbx::Dual_quat_cu::identity();
         int i, nv = mesh.vertices.size();
@@ -347,14 +371,14 @@ public:
                     if (dq.rotation().dot(q0) < 0.f)
                         w *= -1.f;
 
+                    // combine the quaternion with the main quaternion
+                    // that will be used for transforming.
                     dquat_blend = dquat_blend + dq * w;          
             }
 
             // Transform the vertex
-            Vector3 dqpos = out.vertices[i].pos;
-            dqpos = transformPoint(out.vertices[i].pos, dquat_blend);
-            out.vertices[i].pos = dqpos;
-
+            out.vertices[i].pos = transformPoint(out.vertices[i].pos, 
+                    dquat_blend);
         }
         return out;
     }

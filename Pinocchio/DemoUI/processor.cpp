@@ -129,7 +129,7 @@ ArgData processArgs(const vector<string> &args)
         } else if (curStr == string("-algo")) {
             /*  Option to use a different skinning algorithm than the
              *  default LBS. Currently, options are LBS, DQS, and MIX */
-            string algo = args[cur];
+            string algo = args[cur++];
             if (algo == string("LBS")) {
                 out.skinAlgorithm = Mesh::LBS;
                 out.blendWeight = 1.0;
@@ -139,13 +139,12 @@ ArgData processArgs(const vector<string> &args)
             } else if (algo == string("MIX")) {
                 /*  Grab the desired blending weight for LBS, i.e
                  *  how much of the result of LBS you want to see */
-                if(cur + 1 >= num) {
+                if(cur >= num) {
                     cout << "No blending weight given; exiting." << endl;
                     cout << args[cur] << endl;
                     printUsageAndExit();
                 }
                 out.skinAlgorithm = Mesh::MIX;
-                cur++;
                 sscanf(args[cur++].c_str(), "%f", &out.blendWeight);
             } else {
                 cout << "Unrecognized skinning algorithm" << endl;
