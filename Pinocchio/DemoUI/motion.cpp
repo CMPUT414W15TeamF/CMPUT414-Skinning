@@ -279,13 +279,13 @@ int getMsecs()
 
 int Motion::getFrameIdx() const
 {
-    int measureFPS = 0;
+    bool measureFPS = true;
 
     if(fixedFrame >= 0)
         return fixedFrame;
     
     // Use if wanting to take screenshots
-    if (measureFPS == 0) {
+    if (!measureFPS) {
         static int framenum = -1;
 
         framenum += 1;
