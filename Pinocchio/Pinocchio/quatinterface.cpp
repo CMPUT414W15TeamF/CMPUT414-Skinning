@@ -3,15 +3,15 @@
  *
  *       Filename:  QuatInterface.cpp
  *
- *    Description: 
+ *    Description: Some functions for dealing with dual quaternions and classes from
+                    the two different code libraries (Pinocchio and DQS)
  *
  *        Version:  1.0
  *        Created:  03/14/2015 07:01:53 PM
  *       Revision:  none
  *       Compiler:  gcc
  *
- *         Author:  YOUR NAME (), 
- *   Organization:  
+ *         Author: Group F, CMPUT414 Winter 2015
  *
  * =====================================================================================
  */
