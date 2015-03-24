@@ -1,7 +1,7 @@
 /*
  * =====================================================================================
  *
- *       Filename:  QuatInterface.cpp
+ *       Filename:  quatinterface.cpp
  *
  *    Description: Some functions for dealing with dual quaternions and classes from
                     the two different code libraries (Pinocchio and DQS)
