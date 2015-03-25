@@ -124,6 +124,18 @@ int MyWindow::handle(int event) {
         case '1':
                 angle1();
             break;
+        case '2':
+                angle2();
+            break;
+        case '3':
+                angle3();
+            break;
+        case '4':
+                angle4();
+            break;
+        case '5':
+                angle5();
+            break;
         default:
             break;
         }
@@ -159,7 +171,28 @@ void MyWindow::angle1() {
     cur = Transform<>(Vector3(-380, 100, 0) / scale);
 
     transform = cur * transform;
-} 
+}
+
+void MyWindow::angle2()
+{
+    transform = Transform<>(Quaternion<>(Vector3(10, -10, 0), .95), 2.5, Vector3(-0.33, -0.63, 0));
+}
+
+void MyWindow::angle3()
+{
+    transform = Transform<>(Quaternion<>(Vector3(10, 10, 0), .95), 2.25, Vector3(-0.63, -0.63, -1));
+}
+
+void MyWindow::angle4()
+{
+    transform = Transform<>(Quaternion<>(Vector3(1, 15, 0), .95), 2.5, Vector3(1, -0.5, 2.5));
+}
+
+void MyWindow::angle5()
+{
+    transform = Transform<>(Quaternion<>(Vector3(1, 0, 0), .2), 1.5, Vector3(-0.66, -0.66, 0));
+}
+
 
 void MyWindow::draw() {
     int i;
