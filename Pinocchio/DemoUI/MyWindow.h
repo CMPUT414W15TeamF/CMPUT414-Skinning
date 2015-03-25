@@ -67,6 +67,10 @@ private:
     void drawMesh(const Mesh &m, bool flatShading, Vector3 trans = Vector3());
     void drawFloor();
     void angle1();
+    void angle2();
+    void angle3();
+    void angle4();
+    void angle5();
 };
 
 #endif //MYWINDOW_H
