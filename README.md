@@ -107,6 +107,17 @@ Then, to actually run the program, there are a few options. Below is the general
 Below is an example of running the program on command line, assuming you have not changed the directory structure of this repo and that you are in the uppermost Pinocchio folder:
 `./DemoUI/DemoUI ../meshes/Model1.obj -motion DemoUI/data/wakeUpSequence2.txt -algo MIX 0.2`
 
+To adjust the camera angles for your own model, go to Pinocchio/DemoUI/MyWindow.cpp. Find the case switch statement for FL_KEYBOARD. You'll see that some of the cases are '1', '2', '3', '4', '5'. When you hit one of these keys on the keyboard, it will change the camera angle to whatever was defined here by calling the changeAngle() function. It expects to receive 
+* a rotation axis (Vector3)
+* a rotaion angle (double)
+* a scale factor (double)
+* a translation vector (Vector3)
+
+You can get all of these by running Pinocchio, adjusting the camera, and then hitting the 'r' key. This will print all the transformation information you need on the terminal.
+
+Also, if you want to pause Pinocchio at anytime, press 'p'.
+
+
 ## <a name="references"></a>References
 
 We used the following websites and papers to help us and as guides to 
