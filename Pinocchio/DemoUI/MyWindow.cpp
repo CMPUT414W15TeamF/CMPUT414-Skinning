@@ -68,7 +68,6 @@ int MyWindow::handle(int event) {
                 Transform<>(Vector3(-0.5, -0.5, -0.5));
 
             transform = cur * transform;
-            cout << "dx: " << dx << " dy: " << dy << endl;
         }
         else if(Fl::event_state(FL_BUTTON1)) {
             // translate cam
@@ -77,7 +76,6 @@ int MyWindow::handle(int event) {
             Transform<> cur = Transform<>(Vector3(dx, dy, 0) / scale);
 
             transform = cur * transform;
-            cout << "dx: " << dx << " dy: " << dy << endl;
         }
         prevX = Fl::event_x();
         prevY = Fl::event_y();
@@ -121,20 +119,28 @@ int MyWindow::handle(int event) {
                     paused = true;
             }
             return 1;
-        case '1':
-                angle1();
+        case '1':   // captures knees at start
+                changeAngle(Vector3(0.32,-0.95,0.09), .95, 2.7,
+                        Vector3(-1.23,-1.07,0.09));
             break;
-        case '2':
-                angle2();
+        case '2': 
+                changeAngle(Vector3(10,10,0), .95, 2.5, 
+                        Vector3(-0.33, -0.63, 0));
             break;
         case '3':
-                angle3();
+                changeAngle(Vector3(10,10,0), .95, 2.25,
+                        Vector3(-0.63,-0.63,-1));
             break;
         case '4':
-                angle4();
+                changeAngle(Vector3(1,15,0), .95, 2.5,
+                        Vector3(1, -0.5, 2.5));
             break;
         case '5':
-                angle5();
+                changeAngle(Vector3(1,0,0), .2, 1.5,
+                        Vector3(-0.66, -0.66, 0));
+            break;
+        case 'r':   // print rotation
+                cout << transform << endl;
             break;
         default:
             break;
@@ -147,50 +153,10 @@ int MyWindow::handle(int event) {
 }
                 
 
-void MyWindow::angle1() {
-    // zoom
-    double scale = exp(-double(-6.0) / 10.);
-
-    Transform<> cur = Transform<>(Vector3(0.5, 0.5, 0.5)) *
-        Transform<>(scale) *
-        Transform<>(Vector3(-0.5, -0.5, -0.5));
-    
-    transform = cur * transform;
-
-    // rotate camera
-    int dx = -90, dy = 12;
-    double len = sqrt(double(SQR(dx) + SQR(dy))) * 0.01;
-    cur = Transform<>(Vector3(0.5, 0.5, 0.5)) *
-        Transform<>(Quaternion<>(Vector3(dy, dx, 0), len)) *
-        Transform<>(Vector3(-0.5, -0.5, -0.5));
-
-    transform = cur * transform;
-    
-    // translate camera
-    scale = min(w(), h()) / 2.5;
-    cur = Transform<>(Vector3(-380, 100, 0) / scale);
-
-    transform = cur * transform;
-}
-
-void MyWindow::angle2()
+void MyWindow::changeAngle(Vector3 axis, double angle, 
+        double scale, Vector3 v2)
 {
-    transform = Transform<>(Quaternion<>(Vector3(10, -10, 0), .95), 2.5, Vector3(-0.33, -0.63, 0));
-}
-
-void MyWindow::angle3()
-{
-    transform = Transform<>(Quaternion<>(Vector3(10, 10, 0), .95), 2.25, Vector3(-0.63, -0.63, -1));
-}
-
-void MyWindow::angle4()
-{
-    transform = Transform<>(Quaternion<>(Vector3(1, 15, 0), .95), 2.5, Vector3(1, -0.5, 2.5));
-}
-
-void MyWindow::angle5()
-{
-    transform = Transform<>(Quaternion<>(Vector3(1, 0, 0), .2), 1.5, Vector3(-0.66, -0.66, 0));
+    transform = Transform<>(Quaternion<>(axis, angle), scale, v2);
 }
 
 
@@ -331,7 +297,8 @@ void MyWindow::draw() {
 
 void MyWindow::resetTransform()
 {
-    transform = Transform<>(Quaternion<>(Vector3(1, 0, 0), .2), 1.5, Vector3(-0.66, -0.66, 0));
+    transform = Transform<>(Quaternion<>(Vector3(1, 0, 0), .2), 
+            1.5, Vector3(-0.66, -0.66, 0));
 }
 
 void MyWindow::initGL()

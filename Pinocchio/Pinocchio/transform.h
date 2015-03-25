@@ -28,11 +28,15 @@ public:
     //constructors
     Quaternion() : r(1.) { } //initialize to identity
     Quaternion(const Quaternion &q) : r(q.r), v(q.v) {} //copy constructor
-    template<class R> Quaternion(const Quaternion<R> &q) : r(q.r), v(q.v) {} //convert quaternions of other types
+    template<class R> Quaternion(const Quaternion<R> &q) : 
+        r(q.r), v(q.v) {} //convert quaternions of other types
     //axis angle constructor:
-    template<class R> Quaternion(const Vector<R, 3> &axis, const R &angle) : r(cos(angle * Real(0.5))), v(sin(angle * Real(0.5)) * axis.normalize()) {}
+    template<class R> Quaternion(const Vector<R, 3> &axis, 
+            const R &angle) : r(cos(angle * Real(0.5))), 
+                            v(sin(angle * Real(0.5)) * axis.normalize()) {}
     //minimum rotation constructor:
-    template<class R> Quaternion(const Vector<R, 3> &from, const Vector<R, 3> &to) : r(1.)
+    template<class R> Quaternion(const Vector<R, 3> &from, 
+            const Vector<R, 3> &to) : r(1.)
     {
         R fromLenSq = from.lengthsq(), toLenSq = to.lengthsq();
         if(fromLenSq < toLenSq) {
@@ -52,6 +56,7 @@ public:
             v = (from % mid) * fac;
         }
     }
+
 
     //quaternion multiplication
     Quaternion operator*(const Quaternion &q) const { return Quaternion(r * q.r - v * q.v, r * q.v + q.r * v + v % q.v); }
@@ -92,6 +97,20 @@ private:
     Vector<Real, 3> v;
 };
 
+// overide <<  opertator
+inline std::ostream& operator<<(std::ostream& os, 
+        const Quaternion<double> &obj) {
+    // print angle
+    cout << "   Rotation Angle: " << obj.getAngle() << endl;
+    
+    // print axis vector
+    Vector3 axis = obj.getAxis();
+    cout << "   Axis Vector: (" << axis[0] << " ," << axis[1] <<
+        " ," << axis[2] << ")" << endl;
+    return os;
+}
+
+
 template<class Real = double> class Transform { //T(v) = (rot * v * scale) + trans
 public:
     typedef Vector<Real, 3> Vec;
@@ -104,7 +123,6 @@ public:
     
     Transform operator*(const Transform &t) const { return Transform(rot * t.rot, scale * t.scale, trans + rot * (scale * t.trans)); }
     Vec operator*(const Vec &v) const { return rot * (v * scale) + trans; }
-    
     Transform inverse() const { return Transform(rot.inverse(), 1. / scale, rot.inverse() * -trans * (1. / scale)); }
     
     Transform linearComponent() const { return Transform(rot, scale); }
@@ -119,6 +137,26 @@ private:
     Real scale;
     Vec trans;
 };
+
+
+// override << operator
+inline std::ostream& operator<<(std::ostream& os, 
+        const Transform<double> &obj) 
+{
+    // print rotation quaternion
+    cout << "Rotation Quaternion\n: " << obj.getRot() << endl;
+
+    // print scale vector
+    double scale = obj.getScale();
+    cout << "Scale: " << scale << endl;
+
+    // print translation vector
+    Vector3 trans = obj.getTrans();
+    cout << "Translation Vector: (" << trans[0] << " ," << 
+        trans[1] << " ," << trans[2] << ")" << endl;
+    return os;
+}
+    
 
 template<class Real = double> class Matrix3 {
 public:
