@@ -1,0 +1,43 @@
+otation Quaternion:   
+    Rotation Angle: 0.95
+    Axis Vector: (0.31794 ,-0.943885 ,0.0894206)
+Scale: 2.7
+Translation Vector: (-1.5132 ,-1.4476 ,0.09)
+
+Rotation Quaternion:    
+    Rotation Angle: 0.904744
+    Axis Vector: (0.334595 ,-0.939479 ,0.0736579)
+Scale: 2.73318
+Translation Vector: (-0.801359 ,-1.32912 ,-2.06692)
+
+Rotation Quaternion:    
+    Rotation Angle: 0.904744
+    Axis Vector: (0.334595 ,-0.939479 ,0.0736579)
+Scale: 2.73318
+Translation Vector: (-1.59563 ,-1.35841 ,-2.06692)
+
+Rotation Quaternion:    
+    Rotation Angle: 0.2
+    Axis Vector: (1 ,0 ,0)
+Scale: 3.6894
+Translation Vector: (-1.90633 ,-1.97562 ,-0.729802)
+
+Rotation Quaternion:    
+    Rotation Angle: 0.42
+    Axis Vector: (1 ,0 ,0)
+Scale: 2.73318
+Translation Vector: (-0.601001 ,-1.38986 ,-0.848805)
+
+Rotation Quaternion:    
+    Rotation Angle: 0.126676
+    Axis Vector: (0.318229 ,-0.947721 ,-0.0235779)
+Scale: 3.33831
+Translation Vector: (-0.495247 ,-1.08786 ,-0.716069)
+
+Rotation Quaternion:    
+    Rotation Angle: 1.04528
+    Axis Vector: (0.340088 ,-0.906141 ,0.251494)
+Scale: 3.02063
+Translation Vector: (-0.492749 ,-1.53209 ,-3.0041)
+
+
