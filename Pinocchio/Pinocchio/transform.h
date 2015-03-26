@@ -105,7 +105,7 @@ inline std::ostream& operator<<(std::ostream& os,
     
     // print axis vector
     Vector3 axis = obj.getAxis();
-    cout << "   Axis Vector: (" << axis[0] << " ," << axis[1] <<
+    cout << " Rotation Axis (a vector): (" << axis[0] << " ," << axis[1] <<
         " ," << axis[2] << ")" << endl;
     return os;
 }

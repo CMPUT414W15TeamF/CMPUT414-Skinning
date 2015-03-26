@@ -280,7 +280,7 @@ int getMsecs()
 int Motion::getFrameIdx() const
 {
     // measureFPS should be set to true when measuring the FPS
-    bool measureFPS = true;
+    bool measureFPS = false;
 
     if(fixedFrame >= 0)
         return fixedFrame;
@@ -294,7 +294,15 @@ int Motion::getFrameIdx() const
             framenum = 0;
         
         // Pause at specific frames to take snapshot
-        if (framenum == -5) {
+        if (framenum == 33 ||  // angle 1
+            framenum == 4827 ||  // angle 4
+            framenum == 5655 ||  // angle 4
+            framenum == 5827 ||  // angle 4
+            framenum == 6253 ||  // angle 3
+            framenum == 485 ||  // angle 3
+            framenum == 3917 || // angle 5
+            framenum == 5571 || // angle 6
+            framenum == 5843) { // angle 6
             cout << "Enter 'c' to continue" << endl;
             std::cin.ignore();
         }
