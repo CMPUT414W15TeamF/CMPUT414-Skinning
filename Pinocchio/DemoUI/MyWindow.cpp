@@ -153,6 +153,10 @@ int MyWindow::handle(int event) {
 }
                 
 
+/*  
+ *  Changes the camera angle. Expects a rotation axis and angle, the amount
+ *  of scale to be applied, and a translation vector as well.
+ */
 void MyWindow::changeAngle(Vector3 axis, double angle, 
         double scale, Vector3 v2)
 {

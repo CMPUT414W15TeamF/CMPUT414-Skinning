@@ -279,6 +279,7 @@ int getMsecs()
 
 int Motion::getFrameIdx() const
 {
+    // measureFPS should be set to true when measuring the FPS
     bool measureFPS = true;
 
     if(fixedFrame >= 0)
@@ -297,7 +298,7 @@ int Motion::getFrameIdx() const
             cout << "Enter 'c' to continue" << endl;
             std::cin.ignore();
         }
-        
+               
         return framenum;
     }
     

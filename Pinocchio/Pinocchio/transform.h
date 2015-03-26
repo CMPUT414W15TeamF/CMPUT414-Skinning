@@ -144,7 +144,7 @@ inline std::ostream& operator<<(std::ostream& os,
         const Transform<double> &obj) 
 {
     // print rotation quaternion
-    cout << "Rotation Quaternion\n: " << obj.getRot() << endl;
+    cout << "Rotation Quaternion:\n " << obj.getRot() << endl;
 
     // print scale vector
     double scale = obj.getScale();
