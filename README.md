@@ -128,3 +128,4 @@ integrating dual quaternions into pinocchio.
   2007 symposium on Interactive 3D graphics and games. ACM, 2007.
 * Baran, Ilya, and Jovan Popović. "Automatic rigging and animation of 3d
   characters." ACM Transactions on Graphics (TOG). Vol. 26. No. 3. ACM, 2007.
+* http://www.fraps.com/ (used to measure the FPS)
