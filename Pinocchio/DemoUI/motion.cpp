@@ -289,26 +289,17 @@ int Motion::getFrameIdx() const
     if (!measureFPS) {
         static int framenum = -1;
 
-        if (paused)
+        if (paused) {
             return framenum;
+        }
 
         framenum += 1;
         if (framenum >= (signed) data.size())
             framenum = 0;
         
         // Pause at specific frames to take snapshot
-        if (  framenum == 33 ||  // angle 1
-            //framenum == 4827 ||  // angle 4
-            //framenum == 5655 ||  // angle 4
-            //framenum == 5827 ||  // angle 4
-            //framenum == 6254 ||  // angle 3
-            //framenum == 485 ||  // angle 3
-            //framenum == 3917 || // angle 5
-            //framenum == 5571 || // angle 6
-            framenum == 5844) { // angle 6
+        if (framenum == 33) { 
             paused = true;
-            //cout << "Enter 'c' to continue" << endl;
-            //std::cin.ignore();
         }
                
         return framenum;
