@@ -41,8 +41,7 @@ MyWindow::MyWindow(int width, int height, const char* title)
     : Fl_Gl_Window(width, height, title), 
     flatShading(true), 
     floor(true), 
-    skeleton(false),
-    paused(false)
+    skeleton(false)
 {
     size_range(20, 20, 5000, 5000);
     end();
@@ -116,7 +115,7 @@ int MyWindow::handle(int event) {
                 // Pause until user hits p again.
                 if (paused)
                     paused = false;
-                else
+                else 
                     paused = true;
             }
             return 1;
@@ -125,20 +124,20 @@ int MyWindow::handle(int event) {
                         Vector3(-1.23,-1.07,0.09));
             break;
         case '2': 
-                changeAngle(Vector3(.33,-.94,.07), .90, 2.73,
-                        Vector3(-1.60,-1.36,-2.07));
+                changeAngle(Vector3(10,10,0), .95, 2.5, 
+                        Vector3(-0.33, -0.63, 0));
             break;
         case '3':
-                changeAngle(Vector3(1,0,0), .2, 3.69,
-                        Vector3(-1.91, -1.98, -.73));
+                changeAngle(Vector3(10,10,0), .95, 2.25,
+                        Vector3(-0.63,-0.63,-1));
             break;
         case '4':
-                changeAngle(Vector3(1,0,0), .42, 2.73,
-                        Vector3(-0.6, -1.39, -.85));
+                changeAngle(Vector3(1,15,0), .95, 2.5,
+                        Vector3(1, -0.5, 2.5));
             break;
         case '5':
-                changeAngle(Vector3(.32,-.95,-.02), .13, 3.34,
-                        Vector3(-0.49, -1.09, -0.72));
+                changeAngle(Vector3(1,0,0), .2, 1.5,
+                        Vector3(-0.66, -0.66, 0));
             break;
         case '6':
                 changeAngle(Vector3(.34,-.91,.25), 1.05, 3.02,

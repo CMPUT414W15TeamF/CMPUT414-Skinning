@@ -30,9 +30,7 @@ THE SOFTWARE.
 #include "../Pinocchio/mesh.h"
 #include "../Pinocchio/transform.h"
 #include "DisplayMesh.h"
-
-// Global indicating whether or not program si paused or not
-extern bool paused;
+#include "shared.h"
 
 struct LineSegment
 {
@@ -63,7 +61,6 @@ private:
     Transform<> transform;
     vector<DisplayMesh *> meshes;
     vector<LineSegment> lines;
-    bool paused; // boolean to know if we're paused or not
 
     void resetTransform();
     void initGL();

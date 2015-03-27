@@ -33,7 +33,7 @@ clean:
 
 # DO NOT DELETE
 
-MyWindow.o:   MyWindow.h
+MyWindow.o:   MyWindow.h shared.h
 MyWindow.o: ../Pinocchio/mesh.h ../Pinocchio/vector.h
 MyWindow.o: ../Pinocchio/hashutils.h ../Pinocchio/mathutils.h
 MyWindow.o: ../Pinocchio/Pinocchio.h ../Pinocchio/rect.h
@@ -61,7 +61,7 @@ motion.o: motion.h ../Pinocchio/transform.h ../Pinocchio/vector.h
 motion.o: ../Pinocchio/hashutils.h ../Pinocchio/mathutils.h
 motion.o:  ../Pinocchio/Pinocchio.h
 motion.o: ../Pinocchio/skeleton.h ../Pinocchio/graphutils.h
-motion.o: ../Pinocchio/utils.h 
+motion.o: ../Pinocchio/utils.h shared.h
 processor.o:  processor.h MyWindow.h
 processor.o: ../Pinocchio/mesh.h ../Pinocchio/vector.h
 processor.o: ../Pinocchio/hashutils.h ../Pinocchio/mathutils.h
