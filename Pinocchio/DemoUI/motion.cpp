@@ -21,6 +21,7 @@ THE SOFTWARE.
 */
 
 #include "motion.h"
+#include "shared.h"
 #include "../Pinocchio/skeleton.h"
 #include "../Pinocchio/utils.h"
 
@@ -280,7 +281,7 @@ int getMsecs()
 int Motion::getFrameIdx() const
 {
     // measureFPS should be set to true when measuring the FPS
-    bool measureFPS = false;
+    bool measureFPS = true;
 
     if(fixedFrame >= 0)
         return fixedFrame;
@@ -289,33 +290,39 @@ int Motion::getFrameIdx() const
     if (!measureFPS) {
         static int framenum = -1;
 
-        if (paused)
+        if (paused) {
             return framenum;
+        }
 
-        framenum += 1;
-        if (framenum >= (signed) data.size())
+        if (framenum >= (signed)data.size() - 20) {
+            cout << "Run Time End: " << getT() - runStartTime << endl;
             framenum = 0;
+        }
         
         // Pause at specific frames to take snapshot
-        if (  framenum == 33 ||  // angle 1
-            //framenum == 4827 ||  // angle 4
-            //framenum == 5655 ||  // angle 4
-            //framenum == 5827 ||  // angle 4
-            //framenum == 6254 ||  // angle 3
-            //framenum == 485 ||  // angle 3
-            //framenum == 3917 || // angle 5
-            //framenum == 5571 || // angle 6
+        if (framenum == 33 ||
+            framenum == 4827 ||  // angle 4
+            framenum == 5655 ||  // angle 4
+            framenum == 5827 ||  // angle 4
+            framenum == 6254 ||  // angle 3
+            framenum == 485 ||  // angle 3
+            framenum == 3917 || // angle 5
+            framenum == 5571 || // angle 6
             framenum == 5844) { // angle 6
             paused = true;
-            //cout << "Enter 'c' to continue" << endl;
-            //std::cin.ignore();
         }
                
         return framenum;
     }
     
+    int frame = (getMsecs() / (1000 / 120)) % data.size();
+    if (frame >= (signed)data.size() - 5) {
+        cout << "Run Time End: " << getT() - runStartTime << endl;
+        runStartTime = getT();
+    }
+    
     // Use if measuring FPS
-    return (getMsecs() / (1000 / 120)) % data.size();
+    return frame;
 }
 
 vector<Transform<> > Motion::get() const

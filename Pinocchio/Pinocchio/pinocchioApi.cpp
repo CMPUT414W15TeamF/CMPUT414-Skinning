@@ -19,6 +19,17 @@
 #include "pinocchioApi.h"
 #include "debugging.h"
 #include <fstream>
+#include <sys/time.h>
+
+
+// For timing purposes
+long getT()
+{
+    struct timeval tv;
+    gettimeofday (&tv, NULL);
+
+    return tv.tv_sec * 1000 + tv.tv_usec / 1000;
+}
 
 ostream *Debugging::outStream = new ofstream();
 
@@ -71,7 +82,11 @@ PinocchioOutput autorig(const Skeleton &given, const Mesh &m)
 
     //attachment
     VisTester<TreeType> *tester = new VisTester<TreeType>(distanceField);
+
+    unsigned long startTime = getT();
     out.attachment = new Attachment(newMesh, given, out.embedding, tester);
+    cout << "Elapsed Skinning Time: " << 
+        getT() - startTime << endl;
 
     //cleanup
     delete tester;

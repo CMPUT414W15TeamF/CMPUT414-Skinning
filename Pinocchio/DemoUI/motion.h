@@ -51,4 +51,7 @@ private:
     int fixedFrame;
 };
 
+// Time functions
+long getT();
+
 #endif

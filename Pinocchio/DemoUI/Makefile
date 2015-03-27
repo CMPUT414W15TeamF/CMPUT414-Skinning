@@ -48,7 +48,7 @@ defmesh.o: ../Pinocchio/transform.h filter.h ../Pinocchio/matrix.h
 defmesh.o: ../Pinocchio/vector.h ../Pinocchio/transform.h DisplayMesh.h
 defmesh.o: ../Pinocchio/mesh.h motion.h ../Pinocchio/intersector.h
 defmesh.o: ../Pinocchio/vecutils.h
-demoUI.o:  MyWindow.h
+demoUI.o:  MyWindow.h shared.h
 demoUI.o: ../Pinocchio/mesh.h ../Pinocchio/vector.h ../Pinocchio/hashutils.h
 demoUI.o: ../Pinocchio/mathutils.h 
 demoUI.o: ../Pinocchio/Pinocchio.h ../Pinocchio/rect.h

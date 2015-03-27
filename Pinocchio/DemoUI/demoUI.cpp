@@ -24,6 +24,10 @@ THE SOFTWARE.
 #include "MyWindow.h"
 #include "DisplayMesh.h"
 #include "processor.h"
+#include "motion.h"
+#include "shared.h"
+
+unsigned long runStartTime;
 
 int main(int argc, char **argv) {
     MyWindow *window = new MyWindow(1024, 768, "Pinocchio");
@@ -33,6 +37,7 @@ int main(int argc, char **argv) {
     process(args, window);
 
     window->show();
-
+    
+    runStartTime = getT();
     return Fl::run();
 }
