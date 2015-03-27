@@ -31,6 +31,9 @@ THE SOFTWARE.
 #include "../Pinocchio/transform.h"
 #include "DisplayMesh.h"
 
+// Global indicating whether or not program si paused or not
+extern bool paused;
+
 struct LineSegment
 {
     LineSegment() : thickness(1.) {}

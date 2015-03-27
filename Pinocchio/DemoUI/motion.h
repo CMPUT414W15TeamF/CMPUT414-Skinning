@@ -25,6 +25,9 @@ THE SOFTWARE.
 
 #include "../Pinocchio/transform.h"
 
+// Global to know whether program is paused or not (defined in MyWindow.cpp)
+extern bool paused;
+
 class Motion
 {
 public:

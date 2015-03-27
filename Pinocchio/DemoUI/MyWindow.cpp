@@ -27,6 +27,7 @@ THE SOFTWARE.
 #include "../Pinocchio/skeleton.h"
 
 static HumanSkeleton human;
+bool paused = false;
 
 MyWindow *win = NULL;
 
