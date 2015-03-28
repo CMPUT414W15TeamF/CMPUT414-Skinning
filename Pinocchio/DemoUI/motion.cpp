@@ -281,7 +281,7 @@ int getMsecs()
 int Motion::getFrameIdx() const
 {
     // measureFPS should be set to true when measuring the FPS
-    bool measureFPS = true;
+    bool measureFPS = false;
 
     if(fixedFrame >= 0)
         return fixedFrame;
@@ -294,13 +294,15 @@ int Motion::getFrameIdx() const
             return framenum;
         }
 
-        if (framenum >= (signed)data.size() - 20) {
+        framenum++;
+        if (framenum >= (signed)data.size()) {
             cout << "Run Time End: " << getT() - runStartTime << endl;
+            runStartTime = getT();
             framenum = 0;
         }
         
         // Pause at specific frames to take snapshot
-        if (framenum == 33 ||
+        /*/if (framenum == 33 ||
             framenum == 4827 ||  // angle 4
             framenum == 5655 ||  // angle 4
             framenum == 5827 ||  // angle 4
@@ -310,13 +312,13 @@ int Motion::getFrameIdx() const
             framenum == 5571 || // angle 6
             framenum == 5844) { // angle 6
             paused = true;
-        }
+        }*/
                
         return framenum;
     }
     
     int frame = (getMsecs() / (1000 / 120)) % data.size();
-    if (frame >= (signed)data.size() - 5) {
+    if (frame >= (signed)data.size() - 10) {
         cout << "Run Time End: " << getT() - runStartTime << endl;
         runStartTime = getT();
     }
