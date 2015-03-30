@@ -34,15 +34,12 @@ int main(int argc, char **argv) {
     vector<string> args;
     for(int i = 0; i < argc; ++i)
         args.push_back(argv[i]);
-    unsigned long processTime;
-    for (int i = 0; i < 10; i++) {
-        processTime = getT();
-        process(args, window);
-        cout << "Process time: " << getT() - processTime << endl;
-    }
-/*  
+    unsigned long processTime = getT();
+    process(args, window);
+    cout << "Process time: " << getT() - processTime << endl;
+    
     window->show();
     
     runStartTime = getT();
-    return Fl::run();*/
+    return Fl::run();
 }
