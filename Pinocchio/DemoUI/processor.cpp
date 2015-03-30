@@ -188,9 +188,7 @@ void process(const vector<string> &args, MyWindow *w)
 
     PinocchioOutput o;
     if(!a.noFit) { //do everything
-        unsigned long startTime = getT();  // start time
         o = autorig(given, m);
-        cout << "Elapsed Rigging Time: " << getT() - startTime << endl;
     }
     else { //skip the fitting step--assume the skeleton is already correct for the mesh
         TreeType *distanceField = constructDistanceField(m);
@@ -212,7 +210,8 @@ void process(const vector<string> &args, MyWindow *w)
     }
 
     if(a.motionname.size() > 0) {
-        w->addMesh(new DefMesh(m, given, o.embedding, *(o.attachment), new Motion(a.motionname)));
+        w->addMesh(new DefMesh(m, given, o.embedding, *(o.attachment),
+                    new Motion(a.motionname)));
     }
     else {
         w->addMesh(new StaticDisplayMesh(m));
