@@ -49,8 +49,8 @@ struct ArgData
     bool noFit;
     Skeleton skeleton;
     string skeletonname;
-    int skinAlgorithm;
-    float blendWeight;
+    int skinAlgorithm;	// Indicates which skinning algorithm to use
+    float blendWeight;	// Indicates the blending weight for MIX algorithm
 };
 
 void printUsageAndExit()
@@ -73,7 +73,8 @@ ArgData processArgs(const vector<string> &args)
         printUsageAndExit();
 
     out.filename = args[1];
-    // set default skinning algorithm and blending weight
+    // set default skinning algorithm as LBS, and the default blending weight
+	// as 0.5
     out.skinAlgorithm = Mesh::LBS;
     out.blendWeight = 0.5;
 
@@ -130,13 +131,11 @@ ArgData processArgs(const vector<string> &args)
             /*  Option to use a different skinning algorithm than the
              *  default LBS. Currently, options are LBS, DQS, and MIX */
             string algo = args[cur++];
-            if (algo == string("LBS")) {
+            if (algo == string("LBS"))
                 out.skinAlgorithm = Mesh::LBS;
-                out.blendWeight = 1.0;
-            } else if (algo == string("DQS")) {
+            else if (algo == string("DQS"))
                 out.skinAlgorithm = Mesh::DQS;
-                out.blendWeight = 0.0;
-            } else if (algo == string("MIX")) {
+            else if (algo == string("MIX")) {
                 /*  Grab the desired blending weight for LBS, i.e
                  *  how much of the result of LBS you want to see */
                 if(cur >= num) {

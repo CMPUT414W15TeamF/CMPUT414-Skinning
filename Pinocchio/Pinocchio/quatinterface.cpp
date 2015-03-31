@@ -3,8 +3,11 @@
  *
  *       Filename:  quatinterface.cpp
  *
- *    Description: Some functions for dealing with dual quaternions and classes from
-                    the two different code libraries (Pinocchio and DQS)
+ *    Description: We created the following file to help with the interfacing 
+ *	  between the different classes from pinocchio and the dual quaternion 
+ *	  skinning library. Since they both used data classes defined by themselves,
+ *	  we had to convert between the different data classes. For example, while
+ *	  Pinocchio uses the Vector3 class, the DQS library uses a Vec3 class.
  *
  *        Version:  1.0
  *        Created:  03/14/2015 07:01:53 PM

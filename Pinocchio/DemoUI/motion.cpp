@@ -278,23 +278,46 @@ int getMsecs()
     return getT() - startTime;
 }
 
+/* 
+ * In this function, the id of the next frame to be shown is retrieved. There
+ * are two options though depending on the value f the boolean normalSpeed.
+ * 
+ * If normalSpeed is set to true, the the original algorithm for getting the
+ * frame Id is used, which basically uses the current time to determine the
+ * next frame id. The only problem with this is that frames will always be
+ * skipped in between, thus making it difficult to always pause at the same
+ * frames when running our tests and taking screenshots.
+ *
+ * The second option is to set normalSpeed to false. This was, a counter is
+ * kept which indicates what frame we are on, and when the counter reaches the
+ * last frame, it is reset to zero. This allows us for consistently being 
+ * able to pause at the exact frames we want. This is the setting we used
+ * for our project. Note it also leads to a much slower run time.
+ *
+ */
 int Motion::getFrameIdx() const
 {
-    // measureFPS should be set to true when measuring the FPS
-    bool measureFPS = false;
+    // Indicates how to get frame id, the normal way (faster) or the more
+	// precise way (for this, set to false).
+    bool normalSpeed = false;
 
     if(fixedFrame >= 0)
         return fixedFrame;
     
-    // Use if wanting to take screenshots
-    if (!measureFPS) {
+    // Keep a counter to indicate what frame we are on, and increment it
+	// each time through
+    if (!normalSpeed) {
         static int framenum = -1;
 
+		// If the animation is paused, don't increment the framenumber.
         if (paused) {
             return framenum;
         }
 
         framenum++;
+		
+		// If reached last frame, reset the framenumber and output how
+		// long it took to run through the animation
         if (framenum >= (signed)data.size()) {
             cout << "Run Time End: " << getT() - runStartTime << endl;
             runStartTime = getT();
@@ -317,6 +340,8 @@ int Motion::getFrameIdx() const
         return framenum;
     }
     
+	// Rough measurement of how long it took to run through the animation
+	// at normal speed
     int frame = (getMsecs() / (1000 / 120)) % data.size();
     if (frame >= (signed)data.size() - 10) {
         cout << "Run Time End: " << getT() - runStartTime << endl;

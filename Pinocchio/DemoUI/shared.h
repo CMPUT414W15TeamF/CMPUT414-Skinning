@@ -15,6 +15,8 @@
  * =====================================================================================
  */
 
-// Global indicating whether or not program si paused or not
+// Global indicating whether or not program is paused
 extern bool paused;
+
+// Global variable indicating the start time of each run of the animation.
 extern unsigned long runStartTime;

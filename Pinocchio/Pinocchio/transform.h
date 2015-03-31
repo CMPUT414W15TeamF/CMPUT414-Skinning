@@ -97,7 +97,7 @@ private:
     Vector<Real, 3> v;
 };
 
-// overide <<  opertator
+// overide <<  opertator to allows us to print a Quaternion object to terminal
 inline std::ostream& operator<<(std::ostream& os, 
         const Quaternion<double> &obj) {
     // print angle
@@ -139,7 +139,7 @@ private:
 };
 
 
-// override << operator
+// override << operator to allows us to print a Transform object to terminal
 inline std::ostream& operator<<(std::ostream& os, 
         const Transform<double> &obj) 
 {

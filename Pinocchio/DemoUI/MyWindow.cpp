@@ -119,31 +119,31 @@ int MyWindow::handle(int event) {
                     paused = true;
             }
             return 1;
-        case '1':   // captures knees at start
+        case '1':   // Changes the camera angle
                 changeAngle(Vector3(0.32,-0.95,0.09), .95, 2.7,
                         Vector3(-1.23,-1.07,0.09));
             break;
-        case '2': 
+        case '2': // Changes the camera angle
                 changeAngle(Vector3(.33,-.94,.07), .90, 2.73,
                         Vector3(-1.60,-1.36,-2.07));
             break;
-        case '3':
+        case '3':	// Changes the camera angle
                 changeAngle(Vector3(1,0,0), .2, 3.69,
                         Vector3(-1.91, -1.98, -.73));
             break;
-        case '4':
+        case '4':	// Changes the camera angle
                 changeAngle(Vector3(1,0,0), .42, 2.73,
                         Vector3(-0.6, -1.39, -.85));
             break;
-        case '5':
+        case '5':	// Changes the camera angle
                 changeAngle(Vector3(.32,-.95,-.02), .13, 3.34,
                         Vector3(-0.49, -1.09, -0.72));
             break;
-        case '6':
+        case '6':	// Changes the camera angle
                 changeAngle(Vector3(.34,-.91,.25), 1.05, 3.02,
                         Vector3(-0.49, -1.53, -3.0));
             break;
-        case 'r':   // print rotation
+        case 'r':   // Print current transformation of camera to terminal.
                 cout << transform << endl;
             break;
         default:
