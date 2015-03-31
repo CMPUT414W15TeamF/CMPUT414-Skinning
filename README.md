@@ -20,6 +20,8 @@ the implementation and algorithms used can be found in their paper paper
 The readme and license information for Pinocchio are available in the 
 Pinocchio directory.
 
+For detailed information on Pinocchio, you can visit their website at [this linke](http://www.mit.edu/~ibaran/autorig/pinocchio.html).
+
 ## <a name="dqs"></a> Dual Quaternion Skinning Library
 
 The Dual Quaternion Skinning Library was created by Rodolphe Vaillant-David.
@@ -59,6 +61,8 @@ We then also decided to see if by blending the results of LBS and DQS the
 visual results could be improved (since DQS is said to have the problem of
 the "bulging" artifcat). We did a few more modifications in order to choose
 if we wanted to run the pinocchio using LBS, DQS, or a mix of both.
+
+For a mix of both, we decided on 3 different experiments to try.
 
 All in all, below is a list of all the files we modified in order for our 
 project:
