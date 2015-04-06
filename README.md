@@ -242,7 +242,11 @@ weight assigning. The second time printed out is Run Time, which indicates how
 long it takes to display and run the animation from the first frame to the last 
 frame. The times printed out are in seconds.
 
+## <a name="run"></a> How to Compare
 
+We used a bit of script in `demoUI/motion.cpp` to pause the animation at specific frame
+You can uncomment the line between 328 and 338 start with //Pause at specific frames to
+take snapshot. But make sure when you want to compare the time, just comment those line.
 
 ## <a name="references"></a>References
 
