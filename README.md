@@ -8,6 +8,8 @@ This is group F's project on Skinning for the course of CMPUT414 Winter 2015.
 * [Our Changes / Contributions ](#changes)
 * [How to Compile](#compile)
 * [How to Run](#run)
+* [How to Obtain Run Times](#runtimes)
+* [How to Automatically Pause Pinocchio at Specific Frames](#pause)
 * [References](#references)
 
 
@@ -242,11 +244,25 @@ weight assigning. The second time printed out is Run Time, which indicates how
 long it takes to display and run the animation from the first frame to the last 
 frame. The times printed out are in seconds.
 
-## <a name="run"></a> How to Compare
+## <a name="runtimes"></a> How to Obtain Run Times
+By running Pinocchio, two times will automatically be printed out to your 
+terminal. The first is the `process time`, which inclued Discretization Time,
+Embedding Time, and Attachment Time (which includes the assignment of weights
+to joints). 
 
-We used a bit of script in `demoUI/motion.cpp` to pause the animation at specific frame
-You can uncomment the line between 328 and 338 start with //Pause at specific frames to
-take snapshot. But make sure when you want to compare the time, just comment those line.
+The second time that is printed out is the `run time`. This is the time it takes
+to run the animation from frame 0 to the last frame. During this time is when 
+the live mesh deformation is happening.
+
+## <a name="pause"></a> How to Automatically Pause Pinocchio at Specific Frames
+We used a bit of code in `demoUI/motion.cpp` to pause the animation at specific frames. 
+You can uncomment the lines between 328 and 338 start with //Pause at specific frames, 
+compile, and then run Pinocchio. The animation will then stop at whatever frames
+were specified, so you can have time to adjust the camera angle, and take a 
+snapshot. You can replace the frame numbers in motion.cpp with whatever frames
+you want Pinocchio to stop at. 
+
+But make sure to comment out these lines again when you want to obtain run times! 
 
 ## <a name="references"></a>References
 
