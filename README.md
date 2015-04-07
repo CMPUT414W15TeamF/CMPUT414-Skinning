@@ -210,7 +210,7 @@ In order to run Pinocchio for the purposes of this project, first make sure you 
 LD_LIBRARY_PATH variable in your .bashrc. By default, it should be in the folder `CMPUT414-Skinning/Pinocchio/Pinocchio`.
 
 Then, to actually run the program, there are a few options. Below is the general command to use:
-`/path/to/DemoUI path/to/obj/file -motion path/to/mocap/file [-algo <LBS|DQS|MIX> <blend_weight>`
+`/path/to/DemoUI path/to/obj/file -motion path/to/mocap/file [-algo <LBS|DQS|MIX> [blend_weight]]`
 
 * /path/to/DemoUI : the path to the DemoUI executable file (by default should be in `CMPUT414-Skinning/Pinocchio/DemoUI`)
 * /path/to/obj/file : the path to the object file you wish to rig / skin
@@ -218,7 +218,7 @@ Then, to actually run the program, there are a few options. Below is the general
 * path/to/mocap/file : path to the motion capture file you want to use. Note that you can only use the motion capture files that come with Pinocchio (found under `CMPUT414-Skinning/Pinocchio/DemoUI/data`)
 * -algo : used to specify a specific skinning algorithm you want to use. If this is not specified, by default LBS will be used.
 * LBS|DQS|MIX : the 3 different skinning algorithms to choose from. LBS = linear blend skinning, DQS = dual quaternion skinning, MIX = mixed result from both LBS and DQS.
-* <blend_weight> : only needed if chosen skinning algorithm is MIX. This blend weight specifies how much of the LBS result you want blended in. By default, if not specified, .5 will be used so the final result will be 50% from LBS and 50% from DQS. A blend weight of 0.0 would mean you are only using the result from DQS, while a blend weight of 1.0 means the result will be solely based on LBS.
+* blend_weight : only needed if chosen skinning algorithm is MIX. This blend weight specifies how much of the LBS result you want blended in. By default, if not specified, .5 will be used so the final result will be 50% from LBS and 50% from DQS. A blend weight of 0.0 would mean you are only using the result from DQS, while a blend weight of 1.0 means the result will be solely based on LBS.
 
 Below is an example of running the program on command line, assuming you have not changed the directory structure of this repo and that you are in the uppermost Pinocchio folder:
 `./DemoUI/DemoUI ../meshes/Model1.obj -motion DemoUI/data/wakeUpSequence2.txt -algo MIX 0.2`
