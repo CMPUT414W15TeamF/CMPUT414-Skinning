@@ -1,6 +1,7 @@
 # CMPUT414-Skinning
 
-This is group F's project on Skinning for the course of CMPUT414 Winter 2015.
+This is group F's project on Skinning for the course of CMPUT414 Winter 2015. To view the breakdown of our weekly tasks, our proposal, literature review, demo slides, final report, and all the data we collected from performance test runs and user studies, please see our [wiki](https://github.com/CMPUT414W15TeamF/CMPUT414-Skinning/wiki).
+
 
 ## Table of Content
 * [Pinocchio Code](#pinocchio)
@@ -11,6 +12,7 @@ This is group F's project on Skinning for the course of CMPUT414 Winter 2015.
 * [How to Obtain Run Times](#runtimes)
 * [How to Automatically Pause Pinocchio at Specific Frames](#pause)
 * [References](#references)
+* [Our Wiki](https://github.com/CMPUT414W15TeamF/CMPUT414-Skinning/wiki)
 
 
 ## <a name="pinocchio"></a> Pinocchio Code 
